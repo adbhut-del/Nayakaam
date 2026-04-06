@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Panel - Manage project highlights for the Nayakaam Productions website.">
+    <title>Admin Panel | Nayakaam Productions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+    <!-- ===== LOGIN OVERLAY ===== -->
+    <div class="login-overlay" id="login-overlay">
+        <div class="login-bg-gradient"></div>
+        <div class="login-card">
+            <div class="login-logo">
+                <span class="logo-text">NAYAKAAM PRODUCTIONS</span>
+                <span class="logo-dot"></span>
+            </div>
+            <h2 class="login-title">Admin Login</h2>
+            <p class="login-subtitle">Enter your credentials to access the admin panel.</p>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Enter username" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password" required>
+                        <button type="button" class="password-toggle" id="password-toggle" aria-label="Show password">
+                            <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="login-error" id="login-error" style="display:none;">
+                    <span>✗</span> Invalid username or password
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg login-submit" id="login-submit-btn">
+                    Sign In
+                </button>
+            </form>
+            <p class="login-hint">Default: <strong>admin</strong> / <strong>admin123</strong></p>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN HEADER ===== -->
+    <header class="admin-header" id="admin-header" style="display:none;">
+        <div class="admin-header-inner">
+            <a href="index.html" class="logo" id="admin-logo">
+                <span class="logo-text">NAYAKAAM PRODUCTIONS</span>
+                <span class="logo-dot"></span>
+                <span class="admin-badge">Admin</span>
+            </a>
+            <div class="admin-header-right">
+                <a href="index.html" class="btn btn-secondary" id="admin-back-btn">
+                    ← Back to Site
+                </a>
+                <button class="btn btn-ghost admin-logout" id="admin-logout-btn">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-main" id="admin-main" style="display:none;">
+        <div class="admin-container">
+            <!-- ===== ADD HIGHLIGHT FORM ===== -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h1>Add New Highlight</h1>
+                    <p>Upload a project image or provide a YouTube URL to use the video thumbnail automatically.</p>
+                </div>
+                <form id="highlight-form" class="highlight-form">
+                    <div class="form-group">
+                        <label for="highlight-title">Project Title <span class="required">*</span></label>
+                        <input type="text" id="highlight-title" name="title" placeholder="e.g., Google for India 2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="highlight-description">Description <span class="required">*</span></label>
+                        <textarea id="highlight-description" name="description" rows="3" placeholder="e.g., Curated Google India's Flagship AI Vision Summit" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="highlight-video">YouTube Video URL</label>
+                        <input type="url" id="highlight-video" name="videoUrl" placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <span class="form-hint">Paste any YouTube URL. It will be embedded automatically.</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="highlight-image">Project Image</label>
+                        <div class="file-upload-area" id="file-upload-area">
+                            <div class="file-upload-content" id="file-upload-content">
+                                <div class="upload-icon">📸</div>
+                                <p>Drag & drop an image here, or <span class="upload-browse">browse</span></p>
+                                <span class="form-hint">Supports JPG, PNG, WebP (max 10MB)</span>
+                            </div>
+                            <img class="file-preview" id="file-preview" src="" alt="Preview" style="display:none;">
+                        </div>
+                        <input type="file" id="highlight-image" name="image" accept="image/*" style="display:none;">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submit-highlight-btn">
+                            <span class="btn-text">Add Highlight</span>
+                            <span class="btn-loading" style="display:none;">Adding...</span>
+                        </button>
+                        <button type="reset" class="btn btn-ghost" id="reset-form-btn">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ===== EXISTING HIGHLIGHTS LIST ===== -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Existing Highlights</h2>
+                    <p>Manage your project highlights below.</p>
+                </div>
+                <div class="existing-highlights" id="existing-highlights">
+                    <!-- Dynamically populated -->
+                </div>
+                <div class="empty-admin-state" id="empty-admin-state" style="display: none;">
+                    <p>No highlights yet. Use the form above to add your first one!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

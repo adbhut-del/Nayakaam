@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+*.db
+uploads/
+pdf_output.txt
+__pycache__/
+*.pyc
+.env
+.vscode/
