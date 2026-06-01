@@ -1617,11 +1617,11 @@
 
             createMedias() {
                 const items = [
-                    { image: 'Scroller/Google For India (5).jpeg', text: 'Google For India' },
-                    { image: 'Scroller/Google For India (8).jpeg', text: 'Event Scale' },
-                    { image: 'Scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg', text: 'Live Broadcast' },
-                    { image: 'Scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg', text: 'Production Control' },
-                    { image: 'Scroller/download.jfif', text: 'Visual Tech' }
+                    { image: 'scroller/Google For India (5).jpeg', text: 'Google For India' },
+                    { image: 'scroller/Google For India (8).jpeg', text: 'Event Scale' },
+                    { image: 'scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg', text: 'Live Broadcast' },
+                    { image: 'scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg', text: 'Production Control' },
+                    { image: 'scroller/download.jfif', text: 'Visual Tech' }
                 ];
                 const geometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
                 this.medias = [...items, ...items].map((item, index) => new Media({
@@ -1676,13 +1676,13 @@
 
         const items = [
             { url: 'logos/google.svg', type: 'logo' },
-            { url: 'Scroller/Google For India (5).jpeg', type: 'project' },
+            { url: 'scroller/Google For India (5).jpeg', type: 'project' },
             { url: 'logos/amazon.svg', type: 'logo' },
-            { url: 'Scroller/Google For India (8).jpeg', type: 'project' },
+            { url: 'scroller/Google For India (8).jpeg', type: 'project' },
             { url: 'logos/meta.svg', type: 'logo' },
-            { url: 'Scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg', type: 'project' },
+            { url: 'scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg', type: 'project' },
             { url: 'logos/vw.svg', type: 'logo' },
-            { url: 'Scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg', type: 'project' }
+            { url: 'scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg', type: 'project' }
         ];
 
         let imagesTotal = items.length;

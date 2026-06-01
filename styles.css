@@ -75,7 +75,7 @@
     background: 
         radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.2) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(255, 0, 0, 0.15) 0%, transparent 50%),
-        url('Shadows & Caffeine.jfif');
+        url('Shadows%20%26%20Caffeine.jfif');
     background-size: cover;
     background-position: center;
     filter: blur(25px) brightness(0.35);
@@ -1552,8 +1552,8 @@ img {
             rgba(13,13,13,1) 100%
         ),
         /* Image 1 for top half, Image 2 for bottom half — combined via stacked backgrounds */
-        url('Background/hand pick 1.jpeg') top / cover no-repeat,
-        url('Background/hand pick 2.jpeg') bottom / cover no-repeat;
+        url('Background/hand%20pick%201.jpeg') top / cover no-repeat,
+        url('Background/hand%20pick%202.jpeg') bottom / cover no-repeat;
     background-attachment: fixed, fixed, fixed;
     overflow: hidden;
 }
@@ -1572,7 +1572,7 @@ img {
             transparent 60%,
             transparent 100%
         ),
-        url('Background/hand pick 2.jpeg') center / cover no-repeat;
+        url('Background/hand%20pick%202.jpeg') center / cover no-repeat;
     background-attachment: fixed, fixed;
     mix-blend-mode: normal;
     opacity: 1;
@@ -1947,7 +1947,7 @@ img {
 
 /* ===== MULTI-SECTION BACKGROUND WRAPPER ===== */
 .multi-section-bg {
-    background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), url('Background/hand pick 1.jpeg');
+    background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), url('Background/hand%20pick%201.jpeg');
     background-size: cover;
     background-position: 50% 0%;
     background-repeat: no-repeat;
@@ -3424,7 +3424,7 @@ img {
 
 /* ===== SERVICES & DIFFERENTIATORS WRAPPER ===== */
 .services-diff-bg {
-    background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.8) 15%, rgba(5, 5, 5, 0.8) 85%, #000), url('Background/image 2.jfif');
+    background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.8) 15%, rgba(5, 5, 5, 0.8) 85%, #000), url('Background/image%202.jfif');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -3441,7 +3441,7 @@ img {
 
 /* ===== IMPACT & CONTACT WRAPPER ===== */
 .impact-contact-bg {
-    background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.85) 15%, rgba(5, 5, 5, 0.85) 85%, #000), url('Background/image 3.jfif');
+    background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.85) 15%, rgba(5, 5, 5, 0.85) 85%, #000), url('Background/image%203.jfif');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -3612,7 +3612,7 @@ img {
 
 /* ===== PARTNER BACKGROUND ===== */
 .partner-bg {
-    background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.8) 15%, rgba(5, 5, 5, 0.8) 85%, #000), url('Background/hand pick 2.jpeg');
+    background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.8) 15%, rgba(5, 5, 5, 0.8) 85%, #000), url('Background/hand%20pick%202.jpeg');
     background-attachment: fixed;
     background-size: cover;
     background-position: center;

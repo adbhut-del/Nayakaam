@@ -326,6 +326,22 @@ def serve_admin():
     return send_from_directory('.', 'admin.html')
 
 
+@app.route('/<path:filepath>')
+def serve_static(filepath):
+    """Serve images, CSS, JS, and other static assets (needed on Vercel)."""
+    if filepath.startswith('api/'):
+        return jsonify({'success': False, 'error': 'Not found'}), 404
+
+    safe_path = os.path.normpath(filepath)
+    if safe_path.startswith('..') or safe_path.startswith(('/', '\\')):
+        return jsonify({'success': False, 'error': 'Not found'}), 404
+
+    full_path = os.path.join(BASE_DIR, safe_path)
+    if os.path.isfile(full_path):
+        return send_from_directory(BASE_DIR, safe_path)
+    return jsonify({'success': False, 'error': 'Not found'}), 404
+
+
 # Initialize DB for local + Vercel serverless
 init_db()
 
