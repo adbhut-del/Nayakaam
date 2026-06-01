@@ -10,6 +10,9 @@ import uuid
 import sqlite3
 import json
 import re
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 from flask import Flask, request, jsonify, send_from_directory
 
@@ -19,6 +22,13 @@ UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
 DATABASE = os.path.join(BASE_DIR, 'nayakaam_productions.db')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
+
+# ===== EMAIL CONFIG =====
+# Set up your Gmail App Password to enable email notifications
+MAIL_ENABLED = True
+GMAIL_USER = 'info.nayakaamproductions@gmail.com'
+GMAIL_PASSWORD = 'yzcxgifxqbychrhb' 
+RECEIVER_EMAIL = 'info.nayakaamproductions@gmail.com'
 
 # Create uploads folder if it doesn't exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -54,6 +64,7 @@ def init_db():
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
+            mobile TEXT DEFAULT '',
             message TEXT NOT NULL,
             created_at TEXT NOT NULL
         )
@@ -145,12 +156,15 @@ def add_highlight():
             filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
             file.save(filepath)
         elif video_url:
-            # Fallback to YouTube thumbnail
+            # Fallback to YouTube thumbnail or Instagram placeholder
             yt_id = get_youtube_id(video_url)
             if yt_id:
                 unique_filename = f"https://img.youtube.com/vi/{yt_id}/maxresdefault.jpg"
+            elif 'instagram.com' in video_url:
+                # Instagram doesn't provide an easy thumbnail URL, use a placeholder or require upload
+                unique_filename = "https://www.instagram.com/static/images/ico/favicon-200.png/ab6cd409353a.png"
             else:
-                return jsonify({'success': False, 'error': 'Image is required or provide a valid YouTube URL'}), 400
+                return jsonify({'success': False, 'error': 'Image is required or provide a valid YouTube/Instagram URL'}), 400
         else:
             return jsonify({'success': False, 'error': 'Image is required'}), 400
 
@@ -212,6 +226,41 @@ def delete_highlight(highlight_id):
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+def send_email_notification(name, email, mobile, message):
+    """Send an email notification using Gmail SMTP."""
+    if not MAIL_ENABLED or GMAIL_PASSWORD == 'your-app-password-here':
+        return False
+    
+    try:
+        # Create message
+        msg = MIMEMultipart()
+        msg['From'] = GMAIL_USER
+        msg['To'] = RECEIVER_EMAIL
+        msg['Subject'] = f"New Inquiry: {name} via Nayakaam Website"
+
+        body = f"""
+        New message received from your website contact form:
+
+        Name: {name}
+        Email: {email}
+        Mobile: {mobile}
+        Message:
+        {message}
+
+        ---
+        This is an automated notification from Nayakaam Productions.
+        """
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Connect and send
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(GMAIL_USER, GMAIL_PASSWORD)
+            server.send_message(msg)
+        return True
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+        return False
+
 @app.route('/api/contact', methods=['POST'])
 def submit_contact():
     """Handle contact form submissions."""
@@ -221,6 +270,7 @@ def submit_contact():
 
         name = data.get('name', '').strip()
         email = data.get('email', '').strip()
+        mobile = data.get('mobile', '').strip()
         message = data.get('message', '').strip()
 
         if not name or not email or not message:
@@ -231,15 +281,22 @@ def submit_contact():
 
         conn = get_db()
         conn.execute(
-            'INSERT INTO messages (id, name, email, message, created_at) VALUES (?, ?, ?, ?, ?)',
-            (msg_id, name, email, message, created_at)
+            'INSERT INTO messages (id, name, email, mobile, message, created_at) VALUES (?, ?, ?, ?, ?, ?)',
+            (msg_id, name, email, mobile, message, created_at)
         )
         conn.commit()
         conn.close()
 
         print(f"[CONTACT] New message from {name} ({email})")
 
-        return jsonify({'success': True, 'message': 'Message sent successfully'})
+        # Try to send email notification
+        email_sent = send_email_notification(name, email, mobile, message)
+
+        return jsonify({
+            'success': True, 
+            'message': 'Message sent successfully!',
+            'email_notified': email_sent
+        })
 
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500

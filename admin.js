@@ -253,13 +253,13 @@
             }
 
             if (!selectedFile && !videoUrl) {
-                showToast('Please upload a project image or provide a YouTube URL', 'error');
+                showToast('Please upload a project image or provide a Video URL', 'error');
                 return;
             }
 
-            // Validate YouTube URL if provided
-            if (videoUrl && !isValidYouTubeUrl(videoUrl)) {
-                showToast('Please enter a valid YouTube URL', 'error');
+            // Validate Video URL if provided
+            if (videoUrl && !isValidVideoUrl(videoUrl)) {
+                showToast('Please enter a valid YouTube or Instagram Reel URL', 'error');
                 videoInput.focus();
                 return;
             }
@@ -312,14 +312,16 @@
         });
     }
 
-    // ===== YOUTUBE URL VALIDATION =====
-    function isValidYouTubeUrl(url) {
+    // ===== VIDEO URL VALIDATION =====
+    function isValidVideoUrl(url) {
         if (!url) return true; // Optional field
         var patterns = [
             /^(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=[a-zA-Z0-9_-]{11}/,
             /^(https?:\/\/)?(www\.)?youtu\.be\/[a-zA-Z0-9_-]{11}/,
             /^(https?:\/\/)?(www\.)?youtube\.com\/embed\/[a-zA-Z0-9_-]{11}/,
-            /^(https?:\/\/)?(www\.)?youtube\.com\/shorts\/[a-zA-Z0-9_-]{11}/
+            /^(https?:\/\/)?(www\.)?youtube\.com\/live\/[a-zA-Z0-9_-]{11}/,
+            /^(https?:\/\/)?(www\.)?youtube\.com\/shorts\/[a-zA-Z0-9_-]{11}/,
+            /^(https?:\/\/)?(www\.)?instagram\.com\/(p|reel|reels)\/[a-zA-Z0-9_-]+/
         ];
         for (var i = 0; i < patterns.length; i++) {
             if (patterns[i].test(url)) return true;

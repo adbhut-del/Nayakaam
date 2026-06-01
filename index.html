@@ -10,15 +10,52 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.1">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff0000', // Matching Nayakaam Red
+                        accent: '#8B0000',
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ogl/dist/ogl.umd.js"></script>
+    <style>
+        /* Prevents layout shift/flash before splitting text */
+        .animate-chars {
+            opacity: 0;
+        }
+
+        .char {
+            display: inline-block;
+            will-change: transform, opacity, filter;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- ===== PRELOADER ===== -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-bg-overlay"></div>
+        <div class="preloader-content">
+            <div class="preloader-circle">
+                <div class="preloader-glow"></div>
+                <img src="logo.png" alt="Nayakaam Logo" class="preloader-logo">
+            </div>
+        </div>
+    </div>
+
     <!-- ===== HEADER / NAVBAR ===== -->
     <header id="main-header" class="header">
         <div class="header-inner">
@@ -56,79 +93,27 @@
     <section id="hero" class="hero cinematic">
         <div class="hero-video-container">
             <div class="hero-overlay"></div>
-            <!-- YouTube Background Video -->
-            <iframe class="hero-bg-video"
-                src="https://www.youtube.com/embed/RV_rnxYfoTQ?autoplay=1&mute=1&controls=0&loop=1&playlist=RV_rnxYfoTQ&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1"
-                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-            </iframe>
+            <!-- YouTube showreel background -->
+            <iframe
+                class="hero-bg-video"
+                src="https://www.youtube.com/embed/urJGZNd6T5c?autoplay=1&mute=1&loop=1&playlist=urJGZNd6T5c&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+                title="Nayakaam Productions showreel"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                loading="eager"></iframe>
         </div>
         <div class="hero-bg-gradient"></div>
         <div class="hero-particles" id="hero-particles"></div>
-        <div class="hero-content">
-            <div class="hero-badge reveal">
-                <span class="badge-dot"></span>
-                Premium Production House
-            </div>
-            <h1 class="hero-title reveal">
-                <span class="hero-line">NAYAKAAM</span>
-                <span class="hero-line hero-accent">PRODUCTIONS</span>
-            </h1>
-            <p class="hero-subtitle reveal">Redefining storytelling for a digital-first world. Experience the luxury of
-                cinematic precision.</p>
-            <div class="hero-actions reveal">
-                <a href="#portfolio-section" class="btn btn-primary" id="hero-explore-btn">
-                    View Portfolio
-                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </a>
-                <a href="#contact-section" class="btn btn-secondary" id="hero-admin-btn">
-                    Book a Shoot
-                </a>
-            </div>
-        </div>
+        <!-- Hero content removed for a clean video background -->
         <div class="hero-scroll-indicator" id="scroll-indicator">
             <span>Scroll</span>
             <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- ===== CLIENT LOGOS SECTION ===== -->
-    <section class="client-logos-section">
-        <div class="client-logos-header reveal">
-            <h2 class="client-logos-title">Trusted by Global Brands</h2>
-        </div>
-        <div class="logo-track-container">
-            <div class="logo-track">
-                <div class="logo-item"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
-                </div>
-                <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Amazon_logo.svg"
-                        alt="Amazon"></div>
-                <div class="logo-item"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg"
-                        alt="Meta"></div>
-                <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg"
-                        alt="Samsung"></div>
-                <div class="logo-item"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/4/44/Volkswagen_Logo_2019.svg"
-                        alt="Volkswagen"></div>
-                <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Suzuki_logo_2.svg"
-                        alt="Suzuki"></div>
-                <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Honda_logo.svg"
-                        alt="Honda"></div>
-                <!-- Dupes for seamless loop -->
-                <div class="logo-item"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
-                </div>
-                <div class="logo-item"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Amazon_logo.svg"
-                        alt="Amazon"></div>
-                <div class="logo-item"><img
-                        src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg"
-                        alt="Meta"></div>
-            </div>
-        </div>
-    </section>
+
+
+
 
     <!-- ===== STATS MARQUEE ===== -->
     <section class="stats-marquee">
@@ -154,152 +139,446 @@
         </div>
     </section>
 
-    <!-- ===== ABOUT SECTION ===== -->
-    <section id="about-section" class="about-section">
-        <div class="about-inner">
-            <div class="about-left reveal">
-                <span class="section-tag">Who We Are</span>
-                <h2 class="section-title">Born in the<br>Virtual Era.</h2>
-                <p class="about-text">Born during the uncertainty of the COVID era, Nayakaam Productions began its
-                    journey with virtual launch events, turning limitations into creative opportunities. What started as
-                    a virtual production setup evolved into a full-fledged production house in 2023.</p>
-                <p class="about-text">From live virtual experiences to dynamic brand storytelling, we specialize in
-                    delivering technically sound, visually compelling productions backed by precision multi-camera
-                    execution and creative direction. Every project begins with one belief: new work deserves new
-                    thinking.</p>
-            </div>
-            <div class="about-right">
-                <div class="about-stats-grid">
-                    <div class="about-stat-card">
-                        <span class="about-stat-number">50+</span>
-                        <span class="about-stat-label">Live Productions</span>
+    <!-- ===== GRAND BACKGROUND WRAPPER: Who We Are → Trusted By Global Leaders ===== -->
+    <div class="grand-bg-wrapper">
+
+        <!-- ===== MULTI-SECTION BACKGROUND WRAPPER ===== -->
+        <div class="multi-section-bg">
+            <!-- ===== ABOUT SECTION ===== -->
+            <section id="about-section" class="about-section">
+                <div class="about-inner">
+                    <div class="about-left reveal">
+                        <div class="lazy-motion" data-speed="0.5">
+                            <span class="section-tag">Who We Are</span>
+                            <h2 class="section-title">Born in the<br>Virtual Era</h2>
+                            <p class="about-text">Born during the uncertainty of the COVID era, Nayakaam Productions
+                                began its
+                                journey with virtual launch events, turning limitations into creative opportunities.
+                                What
+                                started as
+                                a virtual production setup evolved into a full-fledged production house in 2023.</p>
+                            <p class="about-text">From live virtual experiences to dynamic brand storytelling, we
+                                specialize in
+                                delivering technically sound, visually compelling productions backed by precision
+                                multi-camera
+                                execution and creative direction. Every project begins with one belief: new work
+                                deserves new
+                                thinking.</p>
+                        </div>
                     </div>
-                    <div class="about-stat-card accent">
-                        <span class="about-stat-number">10+</span>
-                        <span class="about-stat-label">Global Brands</span>
-                    </div>
-                    <div class="about-stat-card">
-                        <span class="about-stat-number">3x</span>
-                        <span class="about-stat-label">Google for India Live</span>
-                    </div>
-                    <div class="about-stat-card accent">
-                        <span class="about-stat-number">100%</span>
-                        <span class="about-stat-label">Execution Focus</span>
+                    <div class="about-right">
+                        <div class="lazy-motion" data-speed="0.25">
+                            <div class="about-stats-grid">
+                                <div class="about-stat-card">
+                                    <span class="about-stat-number">50+</span>
+                                    <span class="about-stat-label">Live Production Broadcast</span>
+                                </div>
+                                <div class="about-stat-card accent">
+                                    <span class="about-stat-number">10+</span>
+                                    <span class="about-stat-label">Global Brands</span>
+                                </div>
+                                <div class="about-stat-card">
+                                    <span class="about-stat-number">3x</span>
+                                    <span class="about-stat-label">Google for India Live</span>
+                                </div>
+                                <div class="about-stat-card accent">
+                                    <span class="about-stat-number">100%</span>
+                                    <span class="about-stat-label">Execution Focus</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- ===== VISION & APPROACH SECTION ===== -->
-    <section class="vision-section">
-        <div class="vision-inner">
-            <div class="vision-left reveal">
-                <span class="section-tag">Our Vision</span>
-                <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">To redefine storytelling for a
-                    digital-first world.</h2>
-                <p class="vision-text">We strive to create experiences that leave a lasting impact, blending innovation
-                    with purposeful narratives and uncompromising integrity.</p>
-            </div>
-            <div class="vision-right reveal" style="transition-delay: 0.2s;">
-                <span class="section-tag">Creative Approach</span>
-                <ul class="vision-list">
-                    <li><strong>Concept-Driven Execution</strong></li>
-                    <li><strong>Technical Precision</strong> with Multi-Camera Expertise</li>
-                    <li><strong>Brand-Aligned Storytelling</strong></li>
-                    <li><strong>Detail-Oriented Production</strong></li>
-                    <li><strong>Collaborative & Adaptive Workflow</strong></li>
-                </ul>
-            </div>
-        </div>
-    </section>
+            <!-- ===== VISION & APPROACH SECTION ===== -->
+            <section class="vision-section">
+                <div class="vision-inner">
+                    <div class="vision-left reveal">
+                        <span class="section-tag">Our Vision</span>
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">To redefine
+                            storytelling
+                            for a
+                            digital-first world</h2>
+                        <p class="vision-text">We strive to create experiences that leave a lasting impact, blending
+                            innovation
+                            with purposeful narratives and uncompromising integrity.</p>
+                    </div>
+                    <div class="vision-right reveal" style="transition-delay: 0.2s;">
+                        <span class="section-tag">Creative Approach</span>
+                        <ul class="vision-list">
+                            <li><strong>Concept-Driven Execution</strong></li>
+                            <li><strong>Technical Precision</strong> with Multi-Camera Expertise</li>
+                            <li><strong>Brand-Aligned Storytelling</strong></li>
+                            <li><strong>Detail-Oriented Production</strong></li>
+                            <li><strong>Collaborative & Adaptive Workflow</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
-    <!-- ===== SERVICES SECTION ===== -->
-    <section class="services-section">
-        <div class="section-header reveal">
-            <span class="section-tag">What We Do</span>
-            <h2 class="section-title">Our Services</h2>
-        </div>
-        <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-image"><img
-                        src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&q=80&w=600"
-                        alt="Broadcast"></div>
-                <div class="service-icon">📡</div>
-                <h3>Broadcast & Media</h3>
-                <p>High-quality broadcast-ready content tailored for television, digital platforms, and live events.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-image"><img
-                        src="https://images.unsplash.com/photo-1493723843671-1d655e7d98f0?auto=format&fit=crop&q=80&w=600"
-                        alt="Multi-Cam"></div>
-                <div class="service-icon">🎥</div>
-                <h3>Multi-Camera Solutions</h3>
-                <p>Synchronized multi-camera setups designed for dynamic coverage and immersive storytelling.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-image"><img
-                        src="https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&q=80&w=600"
-                        alt="Streaming"></div>
-                <div class="service-icon">🔴</div>
-                <h3>Live Streaming & Virtual</h3>
-                <p>Seamless, high-definition live streaming experiences built on a strong foundation in virtual events.
-                </p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-image"><img
-                        src="https://images.unsplash.com/photo-1485081666477-7acd2836a94a?auto=format&fit=crop&q=80&w=600"
-                        alt="Production"></div>
-                <div class="service-icon">🎬</div>
-                <h3>End-to-End Production</h3>
-                <p>From concept development to final delivery, we manage complete production workflows seamlessly.</p>
-            </div>
-        </div>
-    </section>
+            <!-- ===== CARD SWAP SHOWCASE SECTION ===== -->
+            <section class="card-swap-section">
+                <div class="card-swap-inner">
+                    <div class="card-swap-text reveal">
+                        <span class="section-tag">Signature Style</span>
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">Fluid Motion
+                            &<br>Perspective Depth</h2>
+                        <p class="vision-text">Our visual language is built on elegance and intent. Experience seamless
+                            transitions that feel natural and responsive, designed to create a sense of calm and luxury.
+                        </p>
 
-    <!-- ===== WHAT SETS US APART ===== -->
-    <section class="differentiators-section">
-        <div class="section-header reveal">
-            <span class="section-tag">Why Choose Us</span>
-            <h2 class="section-title">What Sets Us Apart?</h2>
+                        <!-- <button id="card-swap-replay" class="btn btn-secondary" style="margin-top: 32px;">
+                        Replay Animation
+                    </button> -->
+                    </div>
+
+                    <div class="card-swap-container reveal" style="transition-delay: 0.2s;">
+                        <div class="card-swap-wrapper" id="card-swap-wrapper">
+                            <!-- Cards -->
+                            <div class="cs-card">
+                                <div class="cs-card-inner">
+                                    <img src="Event/WhatsApp Image 2026-04-21 at 4.34.54 PM.jpeg" alt="Google Event">
+                                    <div class="cs-card-overlay"></div>
+                                    <div class="cs-card-content">
+                                        <h3>Google for India</h3>
+                                        <p>3 Years of Live Excellence.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cs-card">
+                                <div class="cs-card-inner">
+                                    <img src="Event/WhatsApp Image 2026-04-21 at 4.35.27 PM.jpeg"
+                                        alt="Honda City Launch">
+                                    <div class="cs-card-overlay"></div>
+                                    <div class="cs-card-content">
+                                        <h3>Honda City Launch</h3>
+                                        <p>A cinematic automotive launch experience.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cs-card">
+                                <div class="cs-card-inner">
+                                    <img src="Event/WhatsApp Image 2026-04-21 at 5.16.43 PM.jpeg" alt="Meta Event">
+                                    <div class="cs-card-overlay"></div>
+                                    <div class="cs-card-content">
+                                        <h3>Meta Branded Series</h3>
+                                        <p>High-end corporate visual storytelling.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cs-card">
+                                <div class="cs-card-inner">
+                                    <img src="Event/WhatsApp Image 2026-04-21 at 6.41.24 PM.jpeg" alt="Amazon Summit">
+                                    <div class="cs-card-overlay"></div>
+                                    <div class="cs-card-content">
+                                        <h3>Amazon Smbhav</h3>
+                                        <p>Seamless multi-cam execution.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="diff-grid">
-            <div class="diff-card reveal">
-                <div class="diff-icon">🌐</div>
-                <h3>Born in the Virtual Era</h3>
-                <p>Built during COVID, we mastered digital-first production from day one.</p>
-            </div>
-            <div class="diff-card reveal" style="transition-delay: 0.1s;">
-                <div class="diff-icon">⚡</div>
-                <h3>Execution-Driven Mindset</h3>
-                <p>We combine creative thinking with flawless on-ground and technical execution.</p>
-            </div>
-            <div class="diff-card reveal" style="transition-delay: 0.2s;">
-                <div class="diff-icon">🎥</div>
-                <h3>Multi-Camera Expertise</h3>
-                <p>Precision-led setups that ensure dynamic, immersive coverage.</p>
-            </div>
-            <div class="diff-card reveal" style="transition-delay: 0.3s;">
-                <div class="diff-icon">🔄</div>
-                <h3>Agile & Adaptive Team</h3>
-                <p>Scalable solutions tailored to both virtual and on-ground productions.</p>
-            </div>
-            <div class="diff-card reveal" style="transition-delay: 0.4s;">
-                <div class="diff-icon">🎯</div>
-                <h3>Brand-Focused Storytelling</h3>
-                <p>Every frame is aligned with your brand’s vision and objectives.</p>
-            </div>
-            <div class="diff-card reveal" style="transition-delay: 0.5s;">
-                <div class="diff-icon">🔍</div>
-                <h3>Detail is Our Discipline</h3>
-                <p>From lighting to live feeds, nothing is left to chance.</p>
-            </div>
+
+        <!-- ===== MAJOR PROJECTS / CASE STUDIES ===== -->
+
+
+        <!-- ===== SERVICES & DIFFERENTIATORS WRAPPER ===== -->
+        <div class="services-diff-bg">
+            <!-- ===== SERVICES HUB (TECH EDITION) ===== -->
+            <section class="services-hub-section" id="services-hub">
+                <div class="section-header reveal" style="position: relative; z-index: 10;">
+                    <span class="section-tag" style="color: #ffae00; opacity: 0.8;">System Architecture</span>
+                    <h2 class="section-title animate-chars">Our Services</h2>
+                    <p class="section-desc">A unified ecosystem of production intelligence.</p>
+                </div>
+
+                <div class="hub-container">
+                    <!-- Background Circles -->
+                    <div class="hub-bg-circles">
+                        <div class="hub-bg-circle hub-bg-circle-1"></div>
+                        <div class="hub-bg-circle hub-bg-circle-2"></div>
+                        <div class="hub-bg-circle hub-bg-circle-3"></div>
+                    </div>
+
+                    <!-- SVG lines -->
+                    <svg class="hub-svg" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet">
+                        <path class="hub-line" d="M500,400 L200,160" />
+                        <path class="hub-line" d="M500,400 L800,160" />
+                        <path class="hub-line" d="M500,400 L200,640" />
+                        <path class="hub-line" d="M500,400 L800,640" />
+                    </svg>
+
+                    <!-- Center Hub -->
+                    <div class="hub-center">
+                        <div class="hub-center-content">
+                            <div class="hub-center-icon">🧠</div>
+                            <h3
+                                class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                Nayakaam Core</h3>
+                            <p>Production Intelligence</p>
+                        </div>
+                    </div>
+
+                    <!-- Satellite Nodes -->
+                    <div class="hub-node node-1">
+                        <div class="hub-node-icon">
+                            <img src="our service/undraw_around-the-world_1p8h.svg" alt="Broadcast Icon">
+                        </div>
+                        <h3>Broadcast</h3>
+                        <p>Global Link Active</p>
+                    </div>
+                    <div class="hub-node node-2">
+                        <div class="hub-node-icon">
+                            <img src="our service/undraw_cloudflare-dev_nf79.svg" alt="Multi-Cam Icon">
+                        </div>
+                        <h3>Multi-Cam</h3>
+                        <p>Sync Array Online</p>
+                    </div>
+                    <div class="hub-node node-3">
+                        <div class="hub-node-icon">
+                            <img src="our service/undraw_decide_g91m.svg" alt="Live Feed Icon">
+                        </div>
+                        <h3>Live Feed</h3>
+                        <p>Streaming Ready</p>
+                    </div>
+                    <div class="hub-node node-4">
+                        <div class="hub-node-icon">
+                            <img src="our service/undraw_grading-papers_lty0.svg" alt="Post-Prod Icon">
+                        </div>
+                        <h3>Post-Prod</h3>
+                        <p>Finalization Suite</p>
+                    </div>
+                </div>
+
+                <div class="initialize-sequence reveal">
+                    <div>Initialize Sequence</div>
+                    <div class="initialize-line"></div>
+                </div>
+            </section>
+
+            <!-- ===== WHAT SETS US APART (CARD STACK) ===== -->
+            <section class="differentiators-section">
+                <div class="diff-stack-inner">
+                    <div class="diff-text-content reveal">
+                        <span class="section-tag">Why Choose Us</span>
+                        <h2 class="section-title animate-chars" style="text-align: left; margin-bottom: 24px;">What Sets
+                            Us
+                            Apart?</h2>
+                        <p class="vision-text">Our foundation is built on technical excellence and adaptive creativity.
+                            Swipe or click the cards to explore our core pillars.</p>
+
+                        <div class="stack-controls" style="margin-top: 40px;">
+                            <button id="reset-stack" class="btn btn-secondary">
+                                <span style="margin-right: 8px;">🔄</span> Reset Pillars
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="diff-stack-container reveal" style="transition-delay: 0.2s;">
+                        <div class="interactive-stack" id="interactive-stack">
+                            <!-- Cards will be dynamically managed but let's define them for structure -->
+                            <div class="stack-card card-grad-1" data-id="1">
+                                <div class="stack-card-content">
+                                    <h3
+                                        class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                        Born in the Virtual Era</h3>
+                                    <p>Built during COVID, we mastered digital-first production from day one.</p>
+                                </div>
+                            </div>
+                            <div class="stack-card card-grad-2" data-id="2">
+                                <div class="stack-card-content">
+                                    <h3
+                                        class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                        Execution-Driven Mindset</h3>
+                                    <p>We combine creative thinking with flawless on-ground and technical execution.</p>
+                                </div>
+                            </div>
+                            <div class="stack-card card-grad-3" data-id="3">
+                                <div class="stack-card-content">
+                                    <h3
+                                        class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                        Multi-Camera Expertise</h3>
+                                    <p>Precision-led setups that ensure dynamic, immersive coverage.</p>
+                                </div>
+                            </div>
+                            <div class="stack-card card-grad-4" data-id="4">
+                                <div class="stack-card-content">
+                                    <h3
+                                        class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                        Agile & Adaptive Team</h3>
+                                    <p>Scalable solutions tailored to both virtual and on-ground productions.</p>
+                                </div>
+                            </div>
+                            <div class="stack-card card-grad-5" data-id="5">
+                                <div class="stack-card-content">
+                                    <h3
+                                        class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                        Brand-Focused Storytelling</h3>
+                                    <p>Every frame is aligned with your brand’s vision and objectives.</p>
+                                </div>
+                            </div>
+                            <div class="stack-card card-grad-6" data-id="6">
+                                <div class="stack-card-content">
+                                    <h3
+                                        class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                        Detail is Our Discipline</h3>
+                                    <p>From lighting to live feeds, nothing is left to chance.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stack-hint">Drag or click top card to cycle</div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+
+        <div class="section-divider"></div>
+
+        <!-- ===== PARTNER WRAPPER ===== -->
+        <div class="partner-bg">
+            <!-- ===== INTERACTIVE NODE SECTION (WHY PARTNER WITH US) ===== -->
+            <section class="interactive-node-section desktop-only">
+                <div class="interactive-node-inner">
+                    <div class="interactive-header reveal">
+                        <span class="section-tag">Let's Collaborate</span>
+                        <h2 class="interactive-title animate-chars">
+                            Why Partner <span class="highlight-text">With</span> Us?
+                        </h2>
+                        <p class="section-desc"
+                            style="max-width: 600px; margin: 0 auto 40px; color: var(--text-secondary);">We
+                            don't just execute projects; we build brand relationships with precision planning and
+                            scalable
+                            production intelligence.</p>
+                    </div>
+
+                    <div class="interactive-canvas">
+                        <!-- Journey Line (Scroll Animated) -->
+                        <svg class="journey-connection" viewBox="0 0 1000 800" preserveAspectRatio="none">
+                            <path id="scroll-journey-path"
+                                d="M 500 100 L 200 160 L 800 160 L 200 640 L 800 640 L 500 700" fill="none"
+                                stroke="rgba(255, 0, 0, 0.2)" stroke-width="2" stroke-dasharray="10 10" />
+                        </svg>
+
+                        <!-- SVG Connections (Existing) -->
+                        <svg class="connection-lines" id="connection-lines" preserveAspectRatio="none">
+                            <path class="branch-line" id="line-sat-1" d="" />
+                            <path class="branch-line" id="line-sat-2" d="" />
+                            <path class="branch-line" id="line-sat-3" d="" />
+                            <path class="branch-line" id="line-sat-4" d="" />
+                        </svg>
+
+                        <!-- Central Node -->
+                        <div class="central-node glass-card" id="central-node">
+                            <div class="central-logo-wrapper">
+                                <img src="logo.png" alt="Nayakaam Logo" class="central-logo">
+                            </div>
+                            <div class="node-overlay">
+                                <h3
+                                    class="text-xl md:text-2xl lg:text-3xl tracking-tighter transition-colors duration-500 hover:text-primary animate-chars">
+                                    Nayakaam Core</h3>
+                                <p>Production Intelligence</p>
+                            </div>
+                        </div>
+
+                        <!-- Satellite Nodes -->
+                        <div class="satellite-node glass-card sat-1" id="sat-1">
+                            <div class="sat-icon">
+                                <img src="box icon/undraw_level-up_fenw.svg" alt="Expertise Icon">
+                            </div>
+                            <h4>Virtual-First Expertise</h4>
+                            <span class="sat-desc">Built in the era of digital transformation, we understand live
+                                streaming and
+                                large-scale broadcast inside out.</span>
+                        </div>
+                        <div class="satellite-node glass-card sat-2" id="sat-2">
+                            <div class="sat-icon">
+                                <img src="box icon/undraw_target-audience_prun.svg" alt="Leaders Icon">
+                            </div>
+                            <h4>Industry Leaders</h4>
+                            <span class="sat-desc">Trusted by global brands like Google, Amazon, Meta, and leading
+                                automotive
+                                giants.</span>
+                        </div>
+                        <div class="satellite-node glass-card sat-3" id="sat-3">
+                            <div class="sat-icon">
+                                <img src="box icon/undraw_growth-chart_4iho.svg" alt="Scalable Icon">
+                            </div>
+                            <h4>Scalable Execution</h4>
+                            <span class="sat-desc">From intimate studio shoots to national-level live launches, we scale
+                                with
+                                precision.</span>
+                        </div>
+                        <div class="satellite-node glass-card sat-4" id="sat-4">
+                            <div class="sat-icon">
+                                <img src="box icon/undraw_action-successful_e2a7.svg" alt="Partners Icon">
+                            </div>
+                            <h4>Long-Term Partners</h4>
+                            <span class="sat-desc">Precision planning that transforms one-off projects into enduring
+                                brand
+                                relationships.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="section-divider"></div>
+
+
+        <div class="section-divider"></div>
+
+        <!-- ===== IMMERSION & BRANDS WRAPPER ===== -->
+        <div class="immersion-brands-bg">
+            <!-- ===== CIRCULAR SHOWCASE ===== -->
+            <section class="circular-showcase-section">
+                <div class="section-header reveal">
+                    <span class="section-tag">Visual Journey</span>
+                    <h2 class="section-title animate-chars">Production Immersion</h2>
+                    <p class="section-desc">Experience our work in a multi-dimensional perspective. Scroll to navigate
+                        through the gallery.</p>
+                </div>
+                <div id="circular-gallery-container" class="circular-gallery-container">
+                    <!-- WebGL Canvas will be injected here -->
+                </div>
+            </section>
+
+            <!-- ===== TRUSTED BY BRANDS (TICKER) ===== -->
+            <section class="brands-ticker-section" id="brands-ticker-section">
+                <div class="brands-ticker-header reveal">
+                    <span class="section-tag">Partners in Excellence</span>
+                    <h2 class="section-title animate-chars">Trusted By Global Leaders</h2>
+                </div>
+
+                <div class="ticker-wrapper">
+                    <div class="ticker-track">
+                        <!-- Set 1 -->
+                        <div class="ticker-item"><img src="logos/google.svg" alt="Google"></div>
+                        <div class="ticker-item"><img src="logos/amazon.svg" alt="Amazon"></div>
+                        <div class="ticker-item"><img src="logos/meta.svg" alt="Meta"></div>
+                        <div class="ticker-item"><img src="logos/vw.svg" alt="VW"></div>
+                        <div class="ticker-item"><img src="logo.png" alt="Nayakaam" class="ticker-logo-alt"></div>
+                        <!-- Set 2 (Duplicate for seamless loop) -->
+                        <div class="ticker-item"><img src="logos/google.svg" alt="Google"></div>
+                        <div class="ticker-item"><img src="logos/amazon.svg" alt="Amazon"></div>
+                        <div class="ticker-item"><img src="logos/meta.svg" alt="Meta"></div>
+                        <div class="ticker-item"><img src="logos/vw.svg" alt="VW"></div>
+                        <div class="ticker-item"><img src="logo.png" alt="Nayakaam" class="ticker-logo-alt"></div>
+                    </div>
+                </div>
+            </section>
+        </div><!-- /immersion-brands-bg -->
+
+    </div><!-- /grand-bg-wrapper -->
+
+    <div class="section-divider"></div>
 
     <!-- ===== EXPERTISE PORTFOLIO SECTION ===== -->
-    <section class="expertise-section" id="expertise-section">
+    <!-- <section class="expertise-section" id="expertise-section">
         <div class="section-header reveal">
             <span class="section-tag">Portfolio Breakdown</span>
             <h2 class="section-title">Our Extensive<br>Experience</h2>
@@ -350,379 +629,218 @@
                 </ul>
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <!-- ===== SEGMENTED PORTFOLIO SECTION ===== -->
-    <section id="portfolio-section" class="portfolio-section">
-        <div class="section-header reveal">
-            <span class="section-tag">Our Portfolio</span>
-            <h2 class="section-title">Segmented Excellence</h2>
-            <p class="section-desc">Filtered by category to showcase our diverse expertise in visual storytelling.</p>
-        </div>
 
-        <div class="portfolio-filters reveal">
-            <button class="filter-btn active" data-filter="all">All Work</button>
-            <button class="filter-btn" data-filter="events">Events & Corporate</button>
-            <button class="filter-btn" data-filter="commercial">Commercial & Brand</button>
-            <button class="filter-btn" data-filter="automotive">Automotive</button>
-            <button class="filter-btn" data-filter="portrait">Portrait</button>
-            <button class="filter-btn" data-filter="video">Cinematic Video</button>
-        </div>
 
-        <div class="portfolio-grid" id="portfolio-grid">
-            <!-- Dummy Items -->
-            <div class="portfolio-item reveal" data-category="automotive">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800"
-                    alt="Automotive Shoot">
-                <div class="portfolio-info">
-                    <span class="portfolio-cat">Automotive</span>
-                    <h3 class="portfolio-title">Luxury Car Launch</h3>
-                </div>
-            </div>
-            <div class="portfolio-item reveal" data-category="events">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800"
-                    alt="Corporate Event">
-                <div class="portfolio-info">
-                    <span class="portfolio-cat">Events</span>
-                    <h3 class="portfolio-title">Global Tech Summit</h3>
-                </div>
-            </div>
-            <div class="portfolio-item reveal" data-category="commercial">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&q=80&w=800"
-                    alt="Brand Campaign">
-                <div class="portfolio-info">
-                    <span class="portfolio-cat">Commercial</span>
-                    <h3 class="portfolio-title">Aesthetix Brand Film</h3>
-                </div>
-            </div>
-            <div class="portfolio-item reveal" data-category="video">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800"
-                    alt="Video Reel">
-                <div class="portfolio-info">
-                    <span class="portfolio-cat">Cinematic Video</span>
-                    <h3 class="portfolio-title">Annual Showreel 2024</h3>
-                </div>
-            </div>
-            <div class="portfolio-item reveal" data-category="portrait">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800"
-                    alt="Portrait">
-                <div class="portfolio-info">
-                    <span class="portfolio-cat">Portrait</span>
-                    <h3 class="portfolio-title">Executive Portraits</h3>
-                </div>
-            </div>
-            <div class="portfolio-item reveal" data-category="automotive">
-                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800"
-                    alt="Car Shoot">
-                <div class="portfolio-info">
-                    <span class="portfolio-cat">Automotive</span>
-                    <h3 class="portfolio-title">Volkswagen Virtus Live</h3>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ===== MAJOR PROJECTS / CASE STUDIES ===== -->
-    <section class="case-studies-section" id="case-studies">
-        <div class="section-header reveal">
-            <span class="section-tag">Case Studies</span>
-            <h2 class="section-title">Iconic Productions</h2>
-            <p class="section-desc">A deep dive into our high-profile collaborations and the impact we delivered.</p>
-        </div>
 
-        <div class="case-study-container">
-            <div class="case-study-card reveal">
-                <div class="cs-image">
-                    <img src="https://images.unsplash.com/photo-1540317580384-e5d43616b9aa?auto=format&fit=crop&q=80&w=1200"
-                        alt="Google Event">
-                </div>
-                <div class="cs-content">
-                    <span class="cs-client">Google for India</span>
-                    <h3 class="cs-title">3 Years of Live Excellence</h3>
-                    <p class="cs-desc">Executing national-level live broadcast for India's biggest tech event.
-                        Concept-driven execution meets technical precision.</p>
-                    <div class="cs-stats">
-                        <div class="cs-stat"><strong>3+</strong> Years</div>
-                        <div class="cs-stat"><strong>Live</strong> Broadcast</div>
-                        <div class="cs-stat"><strong>Multi-Cam</strong></div>
+
+    <!-- ===== HIGHLIGHTS WRAPPER ===== -->
+    <div class="highlights-bg">
+        <section id="highlights" class="highlights-section">
+            <div class="section-header reveal">
+                <span class="section-tag">Elite Showcase</span>
+                <h2 class="section-title">Event & Production Highlights</h2>
+                <p class="section-desc">A curated timeline of our high-stakes summits, luxury launches, and iconic
+                    commercial spectacles brought to life.</p>
+            </div>
+            <div class="highlights-grid" id="highlights-grid">
+                <!-- Dynamically populated from localStorage -->
+            </div>
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-icon">✨</div>
+                <h3>Curating the Best</h3>
+                <p>Our latest projects are currently being archived for presentation. Check back soon for new case
+                    studies.
+                </p>
+            </div>
+        </section>
+    </div>
+
+
+
+    <div class="section-divider"></div>
+
+    <!-- ===== IMPACT & CONTACT WRAPPER ===== -->
+    <div class="impact-contact-bg">
+        <!-- ===== IMPACT SECTION ===== -->
+        <section class="impact-section">
+            <div class="impact-inner reveal">
+                <h2 class="impact-title">Impact & Results Delivered</h2>
+                <div class="impact-grid">
+                    <div class="impact-stat">
+                        <span class="impact-number">50<span class="impact-plus">+</span></span>
+                        <span class="impact-label">Large-Scale Productions Executed</span>
+                    </div>
+                    <div class="impact-stat">
+                        <span class="impact-number">10<span class="impact-plus">+</span></span>
+                        <span class="impact-label">Global & National Brands Served</span>
+                    </div>
+                    <div class="impact-stat">
+                        <span class="impact-number">3<span class="impact-plus">yrs</span></span>
+                        <span class="impact-label">Consecutive Google for India Live Executions</span>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="case-study-card reverse reveal">
-                <div class="cs-image">
-                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516905?auto=format&fit=crop&q=80&w=1200"
-                        alt="Automotive Launch">
-                </div>
-                <div class="cs-content">
-                    <span class="cs-client">Honda City Launch</span>
-                    <h3 class="cs-title">5th Generation Reveal</h3>
-                    <p class="cs-desc">A cinematic automotive launch experience combining high-end visuals with seamless
-                        technical logistics.</p>
-                    <div class="cs-stats">
-                        <div class="cs-stat"><strong>Automotive</strong></div>
-                        <div class="cs-stat"><strong>Live Launch</strong></div>
-                        <div class="cs-stat"><strong>BTS</strong> included</div>
+
+
+        <!-- ===== CONTACT SECTION ===== -->
+        <section id="contact-section" class="contact-section">
+            <div class="contact-inner">
+                <div class="contact-left">
+                    <span class="section-tag">Get In Touch</span>
+                    <h2 class="section-title">Let's Create<br>Something Amazing</h2>
+                    <p class="contact-text">Ready to transform your brand experience? We'd love to hear from you.</p>
+                    <div class="contact-info">
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:nayakaamproductions@gmail.com">nayakaamproductions@gmail.com</a>
+                        </div>
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Phone</span>
+                            <a href="tel:+919258925877">+91 92589 25877</a>
+                        </div>
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Location</span>
+                            <span>Gurgaon, Haryana, India</span>
+                        </div>
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Direct Booking</span>
+                            <a href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">📅 Book a Session via
+                                Calendar</a>
+                        </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://www.instagram.com/nayakaamproductions/" target="_blank" class="social-link"
+                            id="social-instagram">Instagram</a>
+                        <a href="https://www.linkedin.com/company/nayakaamproductions/" target="_blank"
+                            class="social-link" id="social-linkedin">LinkedIn</a>
                     </div>
                 </div>
+                <div class="contact-right">
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="contact-name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="contact-email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="contact-mobile" placeholder="Your Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contact-message" placeholder="Tell us about your project..." rows="5"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary contact-submit" id="contact-submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <svg class="btn-loading" viewBox="0 0 24 24"
+                                style="display: none; width: 20px; height: 20px; animation: spin 1s linear infinite;">
+                                <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                            </svg>
+                        </button>
+                        <div id="contact-form-message" class="contact-form-msg"></div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <!-- ===== TESTIMONIALS SECTION ===== -->
-    <section class="testimonials-section">
-        <div class="section-header reveal">
-            <span class="section-tag">Client Voices</span>
-            <h2 class="section-title">Trusted by the Best</h2>
-        </div>
-        <div class="testimonials-grid reveal">
-            <div class="testimonial-card">
-                <div class="test-quote">"Nayakaam's attention to detail during our Google for India events was
-                    unparalleled. Flawless execution every time."</div>
-                <div class="test-author">
-                    <img src="https://ui-avatars.com/api/?name=MK&background=D4AF37&color=fff" alt="Client">
-                    <div class="test-meta">
-                        <h4>Mridul Krishna</h4>
-                        <span>Google for India Lead</span>
+    <!-- ===== WHY PARTNER WITH US — PILLAR CARDS ===== -->
+    <section class="pillar-section mobile-only" id="wallet-section">
+        <div class="pillar-inner">
+
+            <!-- Header -->
+            <div class="pillar-header reveal">
+                <span class="section-tag">Let's Collaborate</span>
+                <h2 class="pillar-title">
+                    Why Partner<br>
+                    <em class="pillar-title-accent">With Us?</em>
+                </h2>
+                <p class="section-desc">We don't just execute projects — we build brand relationships with precision
+                    planning and scalable production intelligence.</p>
+            </div>
+
+            <!-- 4 Pillar Cards -->
+            <div class="pillar-grid" id="pillar-grid">
+
+                <!-- Card 1 -->
+                <div class="pillar-card" data-index="1">
+                    <div class="pillar-card-num">01</div>
+                    <div class="pillar-card-illustration">
+                        <img src="box icon/undraw_level-up_fenw.svg" alt="Virtual-First Expertise">
                     </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="test-quote">"The cinematic approach they brought to our car launch set a new standard for
-                    our brand storytelling."</div>
-                <div class="test-author">
-                    <img src="https://ui-avatars.com/api/?name=AS&background=D4AF37&color=fff" alt="Client">
-                    <div class="test-meta">
-                        <h4>Amit Sharma</h4>
-                        <span>Brand Director, VW India</span>
+                    <div class="pillar-card-bar"></div>
+                    <div class="pillar-card-body">
+                        <h3 class="pillar-card-title">Virtual-First<br>Expertise</h3>
+                        <p class="pillar-card-desc">Built in the era of digital transformation — we understand live
+                            streaming and large-scale broadcast inside out.</p>
                     </div>
+                    <div class="pillar-card-hover-bg"></div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ===== PRICING & PACKAGES ===== -->
-    <section class="pricing-section" id="pricing">
-        <div class="section-header reveal">
-            <span class="section-tag">Investment</span>
-            <h2 class="section-title">Packages & Tiers</h2>
-            <p class="section-desc">Transparent pricing for premium visual experiences.</p>
-        </div>
-        <div class="pricing-grid reveal">
-            <div class="pricing-card">
-                <div class="price-header">
-                    <h3>Event Coverage</h3>
-                    <div class="price-tag">Custom</div>
+                <!-- Card 2 -->
+                <div class="pillar-card" data-index="2">
+                    <div class="pillar-card-num">02</div>
+                    <div class="pillar-card-illustration">
+                        <img src="box icon/undraw_target-audience_prun.svg" alt="Industry Leaders">
+                    </div>
+                    <div class="pillar-card-bar"></div>
+                    <div class="pillar-card-body">
+                        <h3 class="pillar-card-title">Industry<br>Leaders</h3>
+                        <p class="pillar-card-desc">Trusted by global brands like Google, Amazon, Meta, and leading
+                            automotive giants.</p>
+                    </div>
+                    <div class="pillar-card-hover-bg"></div>
                 </div>
-                <ul class="price-features">
-                    <li>Multi-Camera Setup</li>
-                    <li>Live Streaming Ready</li>
-                    <li>Same-Day Highlights</li>
-                    <li>Drone Coverage</li>
-                </ul>
-                <a href="#contact-section" class="btn btn-secondary">Request Quote</a>
-            </div>
-            <div class="pricing-card featured">
-                <div class="price-badge">Most Popular</div>
-                <div class="price-header">
-                    <h3>Brand Shoots</h3>
-                    <div class="price-tag">Premium</div>
-                </div>
-                <ul class="price-features">
-                    <li>Cinematic Brand Film</li>
-                    <li>Professional Direction</li>
-                    <li>Marketing-Ready Edits</li>
-                    <li>High-End Color Grading</li>
-                </ul>
-                <a href="#contact-section" class="btn btn-primary">Book Now</a>
-            </div>
-            <div class="pricing-card">
-                <div class="price-header">
-                    <h3>Commercial</h3>
-                    <div class="price-tag">Enterprise</div>
-                </div>
-                <ul class="price-features">
-                    <li>Full-Scale Production</li>
-                    <li>Celebrity Management</li>
-                    <li>National Ad Campaigns</li>
-                    <li>Post-Production Suite</li>
-                </ul>
-                <a href="#contact-section" class="btn btn-secondary">Contact Us</a>
-            </div>
-        </div>
-    </section>
 
-    <!-- ===== HIGHLIGHTS SECTION (Preserved) ===== -->
-    <section id="highlights" class="highlights-section">
-        <div class="section-header reveal">
-            <span class="section-tag">Elite Showcase</span>
-            <h2 class="section-title">Event & Production Highlights</h2>
-            <p class="section-desc">A curated timeline of our high-stakes summits, luxury launches, and iconic
-                commercial spectacles brought to life.</p>
-        </div>
-        <div class="highlights-grid" id="highlights-grid">
-            <!-- Dynamically populated from localStorage -->
-        </div>
-        <div class="empty-state" id="empty-state" style="display: none;">
-            <div class="empty-icon">✨</div>
-            <h3>Curating the Best</h3>
-            <p>Our latest projects are currently being archived for presentation. Check back soon for new case studies.
-            </p>
+                <!-- Card 3 -->
+                <div class="pillar-card" data-index="3">
+                    <div class="pillar-card-num">03</div>
+                    <div class="pillar-card-illustration">
+                        <img src="box icon/undraw_growth-chart_4iho.svg" alt="Scalable Execution">
+                    </div>
+                    <div class="pillar-card-bar"></div>
+                    <div class="pillar-card-body">
+                        <h3 class="pillar-card-title">Scalable<br>Execution</h3>
+                        <p class="pillar-card-desc">From intimate studio shoots to national-level live launches — we
+                            scale with precision.</p>
+                    </div>
+                    <div class="pillar-card-hover-bg"></div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="pillar-card" data-index="4">
+                    <div class="pillar-card-num">04</div>
+                    <div class="pillar-card-illustration">
+                        <img src="box icon/undraw_action-successful_e2a7.svg" alt="Long-Term Partners">
+                    </div>
+                    <div class="pillar-card-bar"></div>
+                    <div class="pillar-card-body">
+                        <h3 class="pillar-card-title">Long-Term<br>Partners</h3>
+                        <p class="pillar-card-desc">Precision planning that transforms one-off projects into enduring
+                            brand relationships.</p>
+                    </div>
+                    <div class="pillar-card-hover-bg"></div>
+                </div>
+
+            </div><!-- /pillar-grid -->
+
         </div>
     </section>
 
-    <!-- ===== TEAM SECTION ===== -->
-    <section class="team-section" id="team-section">
-        <div class="section-header reveal">
-            <span class="section-tag">Our People</span>
-            <h2 class="section-title">The Team Behind<br>the Vision</h2>
-        </div>
-        <div class="team-grid">
-            <div class="team-card reveal">
-                <div class="team-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400"
-                        alt="Founder">
-                </div>
-                <div class="team-info">
-                    <h3 class="team-name">Aryan Verma</h3>
-                    <p class="team-role">Founder & Creative Director</p>
-                </div>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400"
-                        alt="Director">
-                </div>
-                <div class="team-info">
-                    <h3 class="team-name">Rohan Sharma</h3>
-                    <p class="team-role">Head of Productions</p>
-                </div>
-            </div>
-            <div class="team-card reveal">
-                <div class="team-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400"
-                        alt="Producer">
-                </div>
-                <div class="team-info">
-                    <h3 class="team-name">Ishani Malhotra</h3>
-                    <p class="team-role">Executive Producer</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- ===== IMPACT SECTION ===== -->
-    <section class="impact-section">
-        <div class="impact-inner reveal">
-            <h2 class="impact-title">Impact & Results Delivered</h2>
-            <div class="impact-grid">
-                <div class="impact-stat">
-                    <span class="impact-number">50<span class="impact-plus">+</span></span>
-                    <span class="impact-label">Large-Scale Productions Executed</span>
-                </div>
-                <div class="impact-stat">
-                    <span class="impact-number">10<span class="impact-plus">+</span></span>
-                    <span class="impact-label">Global & National Brands Served</span>
-                </div>
-                <div class="impact-stat">
-                    <span class="impact-number">3<span class="impact-plus">yrs</span></span>
-                    <span class="impact-label">Consecutive Google for India Live Executions</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== PARTNER SECTION ===== -->
-    <section class="partner-section">
-        <div class="section-header reveal">
-            <span class="section-tag">Let's Collaborate</span>
-            <h2 class="section-title">Why Partner With Us?</h2>
-        </div>
-        <div class="partner-grid">
-            <div class="partner-card reveal">
-                <h3>Virtual-First Expertise</h3>
-                <p>Built in the era of digital transformation, we understand live streaming, hybrid formats, and
-                    large-scale broadcast execution inside out.</p>
-            </div>
-            <div class="partner-card reveal" style="transition-delay: 0.1s;">
-                <h3>Proven with Industry Leaders</h3>
-                <p>Trusted by global brands like Google, Amazon, Meta, and leading automotive & tech brands.</p>
-            </div>
-            <div class="partner-card reveal" style="transition-delay: 0.2s;">
-                <h3>Scalable Execution</h3>
-                <p>From intimate studio shoots to national-level live launches, we scale seamlessly.</p>
-            </div>
-            <div class="partner-card reveal" style="transition-delay: 0.3s;">
-                <h3>Long-Term Creative Partners</h3>
-                <p>We don’t just execute projects, we build brand relationships with precision planning.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== CONTACT SECTION ===== -->
-    <section id="contact-section" class="contact-section">
-        <div class="contact-inner">
-            <div class="contact-left">
-                <span class="section-tag">Get In Touch</span>
-                <h2 class="section-title">Let's Create<br>Something Amazing.</h2>
-                <p class="contact-text">Ready to transform your brand experience? We'd love to hear from you.</p>
-                <div class="contact-info">
-                    <div class="contact-info-item reveal">
-                        <span class="contact-label">Email</span>
-                        <a href="mailto:nayakaamproductions@gmail.com">nayakaamproductions@gmail.com</a>
-                    </div>
-                    <div class="contact-info-item reveal">
-                        <span class="contact-label">Phone</span>
-                        <a href="tel:+919258925877">+91 92589 25877</a>
-                    </div>
-                    <div class="contact-info-item reveal">
-                        <span class="contact-label">Location</span>
-                        <span>Gurgaon, Haryana, India</span>
-                    </div>
-                    <div class="contact-info-item reveal">
-                        <span class="contact-label">Direct Booking</span>
-                        <a href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">📅 Book a Session via
-                            Calendar</a>
-                    </div>
-                </div>
-                <div class="contact-socials">
-                    <a href="https://www.instagram.com/nayakaamproductions/" target="_blank" class="social-link"
-                        id="social-instagram">Instagram</a>
-                    <a href="https://www.linkedin.com/company/nayakaamproductions/" target="_blank" class="social-link"
-                        id="social-linkedin">LinkedIn</a>
-                </div>
-            </div>
-            <div class="contact-right">
-                <form id="contact-form" class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="contact-name" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="contact-email" placeholder="Your Email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="contact-message" placeholder="Tell us about your project..." rows="5"
-                            required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary contact-submit" id="contact-submit-btn">
-                        <span class="btn-text">Send Message</span>
-                        <svg class="btn-loading" viewBox="0 0 24 24"
-                            style="display: none; width: 20px; height: 20px; animation: spin 1s linear infinite;">
-                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
-                        </svg>
-                    </button>
-                    <div id="contact-form-message" class="contact-form-msg"></div>
-                </form>
-            </div>
-        </div>
-    </section>
 
     <!-- ===== FOOTER ===== -->
+
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-top">
-                <span class="footer-tagline">To redefine storytelling for a digital-first world. Detail is our
+                <span class="footer-tagline">To redefine storytelling for a digital-first world Detail is our
                     discipline.</span>
             </div>
             <div class="footer-bottom">
@@ -761,7 +879,43 @@
         </div>
     </div>
 
+    <!-- ===== SUCCESS MODAL (Custom Popup) ===== -->
+    <div id="success-modal" class="custom-modal">
+        <div id="success-modal-overlay" class="custom-modal-overlay"></div>
+        <div class="custom-modal-content">
+            <button id="success-modal-close" class="custom-modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <div class="success-icon-wrapper">
+                    <div class="success-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="modal-title">Success!</h3>
+                <p class="modal-text">Thank you for reaching out. We will connect you soon!</p>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
+    <script type="module">
+        import { animate, stagger, inView } from "https://cdn.jsdelivr.net/npm/motion@12.38.0/+esm"
+
+        // Stagger animation for Why Partner With Us cards
+        inView(".pillar-grid", () => {
+            animate(
+                ".pillar-card",
+                { opacity: [0, 1], y: [100, 0] },
+                {
+                    delay: stagger(0.2),
+                    duration: 0.8,
+                    easing: [0.17, 0.55, 0.55, 1]
+                }
+            )
+        })
+    </script>
 </body>
 
 </html>
