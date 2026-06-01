@@ -10,6 +10,19 @@
     // ===== CONSTANTS =====
     var API_BASE = '/api/highlights';
 
+    /** Encode each path segment so spaces/special chars work on Vercel (Linux). */
+    function assetUrl(path) {
+        if (!path || /^https?:\/\//i.test(path) || path.indexOf('//') === 0) {
+            return path;
+        }
+        if (path.charAt(0) === '/') {
+            return path.split('/').map(function (part, i) {
+                return i === 0 ? part : encodeURIComponent(part);
+            }).join('/');
+        }
+        return path.split('/').map(encodeURIComponent).join('/');
+    }
+
     // ===== DOM ELEMENTS =====
     const header = document.getElementById('main-header');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -229,6 +242,9 @@
         }
 
         var imgSrc = item.imageUrl || item.imageData || '';
+        if (imgSrc && !/^https?:\/\//i.test(imgSrc)) {
+            imgSrc = assetUrl(imgSrc);
+        }
 
         card.innerHTML =
             '<div class="highlight-card-inner">' +
@@ -1617,11 +1633,11 @@
 
             createMedias() {
                 const items = [
-                    { image: 'scroller/Google For India (5).jpeg', text: 'Google For India' },
-                    { image: 'scroller/Google For India (8).jpeg', text: 'Event Scale' },
-                    { image: 'scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg', text: 'Live Broadcast' },
-                    { image: 'scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg', text: 'Production Control' },
-                    { image: 'scroller/download.jfif', text: 'Visual Tech' }
+                    { image: assetUrl('scroller/Google For India (5).jpeg'), text: 'Google For India' },
+                    { image: assetUrl('scroller/Google For India (8).jpeg'), text: 'Event Scale' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg'), text: 'Live Broadcast' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg'), text: 'Production Control' },
+                    { image: assetUrl('scroller/download.jfif'), text: 'Visual Tech' }
                 ];
                 const geometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
                 this.medias = [...items, ...items].map((item, index) => new Media({
@@ -1675,14 +1691,14 @@
         if (!container) return;
 
         const items = [
-            { url: 'logos/google.svg', type: 'logo' },
-            { url: 'scroller/Google For India (5).jpeg', type: 'project' },
-            { url: 'logos/amazon.svg', type: 'logo' },
-            { url: 'scroller/Google For India (8).jpeg', type: 'project' },
-            { url: 'logos/meta.svg', type: 'logo' },
-            { url: 'scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg', type: 'project' },
-            { url: 'logos/vw.svg', type: 'logo' },
-            { url: 'scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg', type: 'project' }
+            { url: assetUrl('logos/google.svg'), type: 'logo' },
+            { url: assetUrl('scroller/Google For India (5).jpeg'), type: 'project' },
+            { url: assetUrl('logos/amazon.svg'), type: 'logo' },
+            { url: assetUrl('scroller/Google For India (8).jpeg'), type: 'project' },
+            { url: assetUrl('logos/meta.svg'), type: 'logo' },
+            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg'), type: 'project' },
+            { url: assetUrl('logos/vw.svg'), type: 'logo' },
+            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg'), type: 'project' }
         ];
 
         let imagesTotal = items.length;

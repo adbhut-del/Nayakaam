@@ -14,6 +14,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
+from urllib.parse import unquote
 from flask import Flask, request, jsonify, send_from_directory
 
 # ===== CONFIG =====
@@ -332,8 +333,10 @@ def serve_static(filepath):
     if filepath.startswith('api/'):
         return jsonify({'success': False, 'error': 'Not found'}), 404
 
-    safe_path = os.path.normpath(filepath)
-    if safe_path.startswith('..') or safe_path.startswith(('/', '\\')):
+    safe_path = os.path.normpath(unquote(filepath))
+    if safe_path.startswith('..'):
+        return jsonify({'success': False, 'error': 'Not found'}), 404
+    if os.path.isabs(safe_path):
         return jsonify({'success': False, 'error': 'Not found'}), 404
 
     full_path = os.path.join(BASE_DIR, safe_path)
