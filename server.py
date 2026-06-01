@@ -18,17 +18,23 @@ from flask import Flask, request, jsonify, send_from_directory
 
 # ===== CONFIG =====
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
-DATABASE = os.path.join(BASE_DIR, 'nayakaam_productions.db')
+IS_VERCEL = os.environ.get('VERCEL') == '1' or bool(os.environ.get('VERCEL_ENV'))
+
+if IS_VERCEL:
+    UPLOAD_FOLDER = '/tmp/uploads'
+    DATABASE = '/tmp/nayakaam_productions.db'
+else:
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+    DATABASE = os.path.join(BASE_DIR, 'nayakaam_productions.db')
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
 
-# ===== EMAIL CONFIG =====
-# Set up your Gmail App Password to enable email notifications
-MAIL_ENABLED = True
-GMAIL_USER = 'info.nayakaamproductions@gmail.com'
-GMAIL_PASSWORD = 'yzcxgifxqbychrhb' 
-RECEIVER_EMAIL = 'info.nayakaamproductions@gmail.com'
+# ===== EMAIL CONFIG (set in Vercel → Settings → Environment Variables) =====
+MAIL_ENABLED = os.environ.get('MAIL_ENABLED', 'true').lower() == 'true'
+GMAIL_USER = os.environ.get('GMAIL_USER', 'info.nayakaamproductions@gmail.com')
+GMAIL_PASSWORD = os.environ.get('GMAIL_PASSWORD', '')
+RECEIVER_EMAIL = os.environ.get('RECEIVER_EMAIL', GMAIL_USER)
 
 # Create uploads folder if it doesn't exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -228,7 +234,7 @@ def delete_highlight(highlight_id):
 
 def send_email_notification(name, email, mobile, message):
     """Send an email notification using Gmail SMTP."""
-    if not MAIL_ENABLED or GMAIL_PASSWORD == 'your-app-password-here':
+    if not MAIL_ENABLED or not GMAIL_PASSWORD:
         return False
     
     try:
@@ -320,9 +326,11 @@ def serve_admin():
     return send_from_directory('.', 'admin.html')
 
 
+# Initialize DB for local + Vercel serverless
+init_db()
+
 # ===== RUN =====
 if __name__ == '__main__':
-    init_db()
     print("=" * 50)
     print("  NAYAKAAM PRODUCTIONS Server is Running!")
     print("  Homepage:    http://localhost:5000")
