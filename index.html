@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=1.9">
+    <link rel="stylesheet" href="styles.css?v=2.0">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -90,21 +90,23 @@
     </div>
 
     <!-- ===== CINEMATIC HERO SECTION ===== -->
-    <section id="hero" class="hero cinematic">
-        <div class="hero-video-container">
+    <section id="hero" class="hero cinematic" aria-label="Showreel">
+        <div class="hero-video-container" aria-hidden="true">
+            <div class="hero-video-frame">
+                <iframe
+                    id="hero-bg-video"
+                    class="hero-bg-video"
+                    src="https://www.youtube.com/embed/urJGZNd6T5c?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=urJGZNd6T5c&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;iv_load_policy=3&amp;disablekb=1&amp;fs=0"
+                    title="Nayakaam Productions showreel"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    loading="eager"
+                    tabindex="-1"></iframe>
+            </div>
             <div class="hero-overlay"></div>
-            <!-- YouTube showreel background -->
-            <iframe
-                class="hero-bg-video"
-                src="https://www.youtube.com/embed/urJGZNd6T5c?autoplay=1&mute=1&loop=1&playlist=urJGZNd6T5c&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
-                title="Nayakaam Productions showreel"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                referrerpolicy="strict-origin-when-cross-origin"
-                loading="eager"></iframe>
         </div>
-        <div class="hero-bg-gradient"></div>
-        <div class="hero-particles" id="hero-particles"></div>
-        <!-- Hero content removed for a clean video background -->
+        <div class="hero-bg-gradient" aria-hidden="true"></div>
+        <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
         <div class="hero-scroll-indicator" id="scroll-indicator">
             <span>Scroll</span>
             <div class="scroll-line"></div>
@@ -897,7 +899,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=1.4"></script>
+    <script src="app.js?v=2.0"></script>
     <script type="module">
         import { animate, stagger, inView } from "https://cdn.jsdelivr.net/npm/motion@12.38.0/+esm"
 

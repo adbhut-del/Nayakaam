@@ -409,6 +409,8 @@ img {
 .hero {
     position: relative;
     min-height: 100vh;
+    min-height: 100dvh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -418,6 +420,8 @@ img {
 .hero-bg-gradient {
     position: absolute;
     inset: 0;
+    z-index: 2;
+    pointer-events: none;
     background:
         radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 0, 0, 0.12) 0%, transparent 60%),
         radial-gradient(ellipse 60% 50% at 20% 80%, rgba(26, 26, 26, 0.04) 0%, transparent 50%),
@@ -433,7 +437,9 @@ img {
 .hero-particles {
     position: absolute;
     inset: 0;
+    z-index: 2;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .hero-content {
@@ -516,7 +522,8 @@ img {
 
 /* ===== CINEMATIC HERO ENHANCEMENTS ===== */
 .hero.cinematic {
-    background: transparent;
+    background: #0d0d0d;
+    isolation: isolate;
 }
 
 .hero-video-container {
@@ -524,8 +531,16 @@ img {
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
+}
+
+/* Clipping box for YouTube cover scaling (iframe ignores object-fit) */
+.hero-video-frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
 }
 
 .hero-bg-video {
@@ -533,32 +548,36 @@ img {
     top: 50%;
     left: 50%;
     width: 100vw;
-    height: 100vh;
+    height: 56.25vw;
+    min-width: 177.78vh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: 100svh;
     transform: translate(-50%, -50%);
-    object-fit: cover;
+    transform-origin: center center;
     border: none;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    filter: brightness(0.95) contrast(1.08) saturate(1.05);
+}
+
+.hero.cinematic.hero-video-ready .hero-bg-video {
     opacity: 1;
-    filter: brightness(0.9) contrast(1.1);
-}
-
-@media (min-aspect-ratio: 16/9) {
-    .hero-bg-video {
-        height: 56.25vw;
-    }
-}
-
-@media (max-aspect-ratio: 16/9) {
-    .hero-bg-video {
-        width: 177.78vh;
-    }
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(13, 13, 13, 0.2), var(--bg-primary));
     z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        rgba(13, 13, 13, 0.18) 0%,
+        rgba(13, 13, 13, 0.28) 45%,
+        rgba(13, 13, 13, 0.62) 85%,
+        rgba(13, 13, 13, 0.78) 100%
+    );
 }
 
 /* ===== INTERACTIVE NODE SECTION ===== */
@@ -1314,9 +1333,10 @@ img {
 /* Scroll Indicator */
 .hero-scroll-indicator {
     position: absolute;
-    bottom: 30px;
+    bottom: max(24px, env(safe-area-inset-bottom, 0px));
     left: 50%;
     transform: translateX(-50%);
+    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1326,12 +1346,7 @@ img {
     letter-spacing: 2px;
     text-transform: uppercase;
     animation: fade-up 0.8s var(--ease-out) 1s both;
-}
-
-@media (max-width: 768px) {
-    .hero-scroll-indicator {
-        display: none; /* Save space on small mobile heights */
-    }
+    pointer-events: none;
 }
 
 .scroll-line {
@@ -4733,31 +4748,52 @@ img {
         background-position: center center !important;
     }
 
-    /* Hero YouTube: full-bleed cover on portrait phones */
+    /* ===== Hero video: mobile cinematic cover ===== */
     .hero.cinematic {
-        min-height: 100vh;
-        min-height: 100dvh;
         min-height: 100svh;
     }
 
-    .hero-video-container {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
+    .hero.cinematic .hero-overlay {
+        background: linear-gradient(
+            180deg,
+            rgba(13, 13, 13, 0.08) 0%,
+            rgba(13, 13, 13, 0.15) 40%,
+            rgba(13, 13, 13, 0.42) 82%,
+            rgba(13, 13, 13, 0.58) 100%
+        );
     }
 
-    .hero-bg-video {
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        width: 177.78vh !important;
-        height: 100vh !important;
-        height: 100dvh !important;
-        height: 100svh !important;
-        min-width: 100vw !important;
-        min-height: 100% !important;
-        max-width: none !important;
-        transform: translate(-50%, -50%) !important;
-        border: none !important;
+    .hero.cinematic .hero-bg-gradient {
+        opacity: 0.4;
+    }
+
+    /* Portrait: 16:9 cover fill + focal point slightly above center (keeps subject in frame) */
+    .hero.cinematic .hero-bg-video {
+        top: 42%;
+        left: 50%;
+        width: 177.78vh;
+        height: 100svh;
+        min-width: 100vw;
+        min-height: 56.25vw;
+        max-width: none;
+        transform: translate(-50%, -50%);
+        filter: brightness(1.1) contrast(1.06) saturate(1.12);
+    }
+
+    .hero-scroll-indicator {
+        display: flex;
+        bottom: max(16px, env(safe-area-inset-bottom, 0px));
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+    }
+}
+
+/* Landscape phones: less aggressive crop */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero.cinematic .hero-bg-video {
+        top: 50%;
+        width: 100vw;
+        height: 56.25vw;
+        min-width: 177.78vh;
+        min-height: 100svh;
     }
 }
