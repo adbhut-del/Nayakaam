@@ -4648,29 +4648,33 @@ img {
         z-index: 1 !important;
     }
 
+    /*
+     * SAME images as desktop .grand-bg-wrapper:
+     *   top half  → hand pick 1.jpeg
+     *   lower half → hand pick 2.jpeg
+     * Contact (outside wrapper) → image 3.jfif
+     *
+     * Optional mobile crops (upload to Background/ — used if you add these files):
+     *   hand pick 1-mobile.jpeg, hand pick 2-mobile.jpeg, image 3-mobile.jfif
+     */
     .grand-bg-wrapper .multi-section-bg::before {
         background-image: linear-gradient(rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.82)),
             url('Background/hand%20pick%201.jpeg') !important;
+        background-position: center top !important;
     }
 
-    .grand-bg-wrapper .services-diff-bg::before {
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(5, 5, 5, 0.82) 50%, rgba(0, 0, 0, 0.75)),
-            url('Background/image%202.jfif') !important;
-    }
-
-    .grand-bg-wrapper .partner-bg::before {
+    .grand-bg-wrapper .services-diff-bg::before,
+    .grand-bg-wrapper .partner-bg::before,
+    .grand-bg-wrapper .immersion-brands-bg::before {
         background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(5, 5, 5, 0.82) 50%, rgba(0, 0, 0, 0.75)),
             url('Background/hand%20pick%202.jpeg') !important;
-    }
-
-    .grand-bg-wrapper .immersion-brands-bg::before {
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(10, 10, 10, 0.82) 50%, rgba(0, 0, 0, 0.75)),
-            url('Background/image5.jfif') !important;
+        background-position: center bottom !important;
     }
 
     .impact-contact-bg::before {
         background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(5, 5, 5, 0.88) 50%, rgba(0, 0, 0, 0.8)),
             url('Background/image%203.jfif') !important;
+        background-position: center center !important;
     }
 
     /* Hero YouTube: full-bleed cover on portrait phones */
