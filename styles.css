@@ -3657,24 +3657,24 @@ img {
         background-repeat: no-repeat !important;
     }
 
+    /* Match desktop .grand-bg-wrapper: hand pick 1 (top) + hand pick 2 (lower sections) */
     .grand-bg-wrapper .multi-section-bg {
         background-image: linear-gradient(rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.82)),
             url('Background/hand%20pick%201.jpeg') !important;
+        background-position: center top !important;
     }
 
-    .grand-bg-wrapper .services-diff-bg {
-        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.82) 15%, rgba(5, 5, 5, 0.82) 85%, #000),
-            url('Background/image%202.jfif') !important;
-    }
-
-    .grand-bg-wrapper .partner-bg {
+    .grand-bg-wrapper .services-diff-bg,
+    .grand-bg-wrapper .partner-bg,
+    .grand-bg-wrapper .immersion-brands-bg {
         background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.82) 15%, rgba(5, 5, 5, 0.82) 85%, #000),
             url('Background/hand%20pick%202.jpeg') !important;
+        background-position: center bottom !important;
     }
 
-    .grand-bg-wrapper .immersion-brands-bg {
-        background-image: linear-gradient(to bottom, #000, rgba(10, 10, 10, 0.82) 15%, rgba(10, 10, 10, 0.82) 85%, #000),
-            url('Background/image5.jfif') !important;
+    .impact-contact-bg {
+        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.85) 15%, rgba(5, 5, 5, 0.85) 85%, #000),
+            url('Background/image%203.jfif') !important;
     }
 
     .hero-video-container {
