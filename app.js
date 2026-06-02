@@ -1328,10 +1328,14 @@
         });
     }
 
+    function useMobileFriendlyBackgrounds() {
+        return window.matchMedia('(max-width: 768px)').matches;
+    }
+
     // ===== MULTI-SECTION BACKGROUND SCROLL =====
     function initAboutBackgroundScroll() {
         const bgContainer = document.querySelector('.multi-section-bg');
-        if (!bgContainer) return;
+        if (!bgContainer || useMobileFriendlyBackgrounds()) return;
 
         gsap.to(bgContainer, {
             backgroundPosition: "50% 80%",
@@ -1348,7 +1352,7 @@
     // ===== SERVICES SECTION BACKGROUND SCROLL =====
     function initServicesBackgroundScroll() {
         const bgContainer = document.querySelector('.services-diff-bg');
-        if (!bgContainer) return;
+        if (!bgContainer || useMobileFriendlyBackgrounds()) return;
 
         gsap.to(bgContainer, {
             backgroundPosition: "50% 100%",
@@ -1365,7 +1369,7 @@
     // ===== IMPACT & CONTACT SECTION BACKGROUND SCROLL =====
     function initImpactBackgroundScroll() {
         const bgContainer = document.querySelector('.impact-contact-bg');
-        if (!bgContainer) return;
+        if (!bgContainer || useMobileFriendlyBackgrounds()) return;
 
         gsap.to(bgContainer, {
             backgroundPosition: "50% 100%",
@@ -1776,8 +1780,8 @@
     
     function initImmersionBackgroundScroll() {
         const bg = document.querySelector('.immersion-brands-bg');
-        if (!bg) return;
-        
+        if (!bg || useMobileFriendlyBackgrounds()) return;
+
         gsap.to(bg, {
             backgroundPositionY: "30%",
             ease: "none",
@@ -1792,8 +1796,8 @@
 
     function initHighlightsBackgroundScroll() {
         const bg = document.querySelector('.highlights-bg');
-        if (!bg) return;
-        
+        if (!bg || useMobileFriendlyBackgrounds()) return;
+
         gsap.to(bg, {
             backgroundPositionY: "35%",
             ease: "none",
@@ -1808,8 +1812,8 @@
 
     function initPartnerBackgroundScroll() {
         const bg = document.querySelector('.partner-bg');
-        if (!bg) return;
-        
+        if (!bg || useMobileFriendlyBackgrounds()) return;
+
         gsap.to(bg, {
             backgroundPositionY: "40%",
             ease: "none",

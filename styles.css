@@ -1598,15 +1598,7 @@ img {
     z-index: 1;
 }
 
-/* Mobile: disable fixed attachment */
-@media (max-width: 768px) {
-    .grand-bg-wrapper {
-        background-attachment: scroll, scroll, scroll;
-    }
-    .grand-bg-wrapper::after {
-        background-attachment: scroll, scroll;
-    }
-}
+/* Mobile background rules: see MOBILE RESPONSIVENESS section */
 
 
 
@@ -3635,13 +3627,72 @@ img {
 }
 
 @media (max-width: 768px) {
-    /* Global Background Fix for Mobile (Fixed backgrounds are buggy on mobile) */
-    .multi-section-bg,
-    .services-diff-bg,
-    .impact-contact-bg,
-    .immersion-brands-bg,
-    .partner-bg {
+    /*
+     * Mobile background fix:
+     * fixed attachment + one tall wrapper breaks cover on iOS/Android.
+     * Use per-section cover backgrounds (matches desktop look per block).
+     */
+    .grand-bg-wrapper {
+        background: linear-gradient(
+            to bottom,
+            rgba(13, 13, 13, 0.9) 0%,
+            rgba(13, 13, 13, 0.75) 50%,
+            rgba(13, 13, 13, 0.9) 100%
+        ) !important;
         background-attachment: scroll !important;
+    }
+
+    .grand-bg-wrapper::after {
+        display: none !important;
+    }
+
+    .grand-bg-wrapper .multi-section-bg,
+    .grand-bg-wrapper .services-diff-bg,
+    .grand-bg-wrapper .partner-bg,
+    .grand-bg-wrapper .immersion-brands-bg,
+    .impact-contact-bg {
+        background-attachment: scroll !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .grand-bg-wrapper .multi-section-bg {
+        background-image: linear-gradient(rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.82)),
+            url('Background/hand%20pick%201.jpeg') !important;
+    }
+
+    .grand-bg-wrapper .services-diff-bg {
+        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.82) 15%, rgba(5, 5, 5, 0.82) 85%, #000),
+            url('Background/image%202.jfif') !important;
+    }
+
+    .grand-bg-wrapper .partner-bg {
+        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.82) 15%, rgba(5, 5, 5, 0.82) 85%, #000),
+            url('Background/hand%20pick%202.jpeg') !important;
+    }
+
+    .grand-bg-wrapper .immersion-brands-bg {
+        background-image: linear-gradient(to bottom, #000, rgba(10, 10, 10, 0.82) 15%, rgba(10, 10, 10, 0.82) 85%, #000),
+            url('Background/image5.jfif') !important;
+    }
+
+    .hero-video-container {
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .hero-bg-video {
+        width: 100vw !important;
+        height: 56.25vw !important;
+        min-width: 177.78vh;
+        min-height: 100vh;
+        min-height: 100dvh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     /* Hero Section */
