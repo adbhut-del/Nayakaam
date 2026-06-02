@@ -3401,9 +3401,60 @@ img {
     .diff-text-content {
         max-width: 100%;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
     }
+    .diff-text-content .section-tag {
+        align-self: center;
+    }
+    .diff-text-content .section-title,
     .diff-text-content h2 {
         text-align: center !important;
+        width: 100%;
+        margin-bottom: 24px;
+    }
+    .diff-text-content .section-title.animate-chars,
+    .diff-text-content h2.animate-chars {
+        display: block;
+        text-align: center !important;
+    }
+    .diff-text-content .section-title .char,
+    .diff-text-content h2 .char {
+        display: inline;
+    }
+    .diff-text-content .vision-text {
+        text-align: center;
+        max-width: 36rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .diff-text-content .stack-controls {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .brands-ticker-header,
+    .circular-showcase-section .section-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 24px;
+        padding-right: 24px;
+        box-sizing: border-box;
+    }
+    .brands-ticker-header .section-title.animate-chars,
+    .circular-showcase-section .section-title.animate-chars {
+        display: block;
+        width: 100%;
+        text-align: center !important;
+    }
+    .brands-ticker-header .section-title .char,
+    .circular-showcase-section .section-title .char {
+        display: inline;
     }
 }
 
@@ -3731,8 +3782,21 @@ img {
     }
 
     /* Padding adjustments */
-    .about-section, .vision-section, .highlights-section, .expertise-section {
+    .about-section, .vision-section, .highlights-section, .expertise-section,
+    .differentiators-section {
         padding: 60px 24px !important;
+    }
+
+    .diff-stack-inner {
+        gap: 48px !important;
+    }
+
+    .brands-ticker-section {
+        padding: 80px 0 !important;
+    }
+
+    .brands-ticker-header {
+        margin-bottom: 48px !important;
     }
 
     /* Stats Marquee */
