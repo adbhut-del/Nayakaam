@@ -3627,73 +3627,7 @@ img {
 }
 
 @media (max-width: 768px) {
-    /*
-     * Mobile background fix:
-     * fixed attachment + one tall wrapper breaks cover on iOS/Android.
-     * Use per-section cover backgrounds (matches desktop look per block).
-     */
-    .grand-bg-wrapper {
-        background: linear-gradient(
-            to bottom,
-            rgba(13, 13, 13, 0.9) 0%,
-            rgba(13, 13, 13, 0.75) 50%,
-            rgba(13, 13, 13, 0.9) 100%
-        ) !important;
-        background-attachment: scroll !important;
-    }
-
-    .grand-bg-wrapper::after {
-        display: none !important;
-    }
-
-    .grand-bg-wrapper .multi-section-bg,
-    .grand-bg-wrapper .services-diff-bg,
-    .grand-bg-wrapper .partner-bg,
-    .grand-bg-wrapper .immersion-brands-bg,
-    .impact-contact-bg {
-        background-attachment: scroll !important;
-        background-size: cover !important;
-        background-position: center center !important;
-        background-repeat: no-repeat !important;
-    }
-
-    /* Match desktop .grand-bg-wrapper: hand pick 1 (top) + hand pick 2 (lower sections) */
-    .grand-bg-wrapper .multi-section-bg {
-        background-image: linear-gradient(rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.82)),
-            url('Background/hand%20pick%201.jpeg') !important;
-        background-position: center top !important;
-    }
-
-    .grand-bg-wrapper .services-diff-bg,
-    .grand-bg-wrapper .partner-bg,
-    .grand-bg-wrapper .immersion-brands-bg {
-        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.82) 15%, rgba(5, 5, 5, 0.82) 85%, #000),
-            url('Background/hand%20pick%202.jpeg') !important;
-        background-position: center bottom !important;
-    }
-
-    .impact-contact-bg {
-        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.85) 15%, rgba(5, 5, 5, 0.85) 85%, #000),
-            url('Background/image%203.jfif') !important;
-    }
-
-    .hero-video-container {
-        width: 100%;
-        height: 100%;
-        min-height: 100vh;
-        min-height: 100dvh;
-    }
-
-    .hero-bg-video {
-        width: 100vw !important;
-        height: 56.25vw !important;
-        min-width: 177.78vh;
-        min-height: 100vh;
-        min-height: 100dvh;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+    /* Section backgrounds: see MOBILE BACKGROUNDS v2 at end of file */
 
     /* Hero Section */
     .hero-title {
@@ -4652,3 +4586,118 @@ img {
 .modal-title { font-family: var(--font-display); font-size: 2rem; color: var(--text-primary); margin-bottom: 16px; }
 .modal-text { color: var(--text-secondary); margin-bottom: 32px; font-size: 1.1rem; line-height: 1.6; }
 .modal-btn { width: 100%; padding: 16px; font-size: 1rem; }
+
+/* ===== MOBILE BACKGROUNDS v2 (last = wins cascade; sticky viewport cover) ===== */
+@media (max-width: 768px) {
+    .grand-bg-wrapper {
+        background: #0d0d0d !important;
+        background-image: none !important;
+    }
+
+    .grand-bg-wrapper::after {
+        display: none !important;
+    }
+
+    /* Undo desktop "transparent" kill — required or mobile bg never shows */
+    .grand-bg-wrapper .multi-section-bg,
+    .grand-bg-wrapper .services-diff-bg,
+    .grand-bg-wrapper .partner-bg,
+    .grand-bg-wrapper .immersion-brands-bg,
+    .impact-contact-bg {
+        position: relative !important;
+        isolation: isolate !important;
+        overflow: visible !important;
+        background: transparent !important;
+        background-image: none !important;
+    }
+
+    /* Sticky full-viewport image (same feel as desktop background-attachment: fixed) */
+    .grand-bg-wrapper .multi-section-bg::before,
+    .grand-bg-wrapper .services-diff-bg::before,
+    .grand-bg-wrapper .partner-bg::before,
+    .grand-bg-wrapper .immersion-brands-bg::before,
+    .impact-contact-bg::before {
+        content: '' !important;
+        display: block !important;
+        position: sticky !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        height: 100svh !important;
+        margin-bottom: -100vh !important;
+        margin-bottom: -100dvh !important;
+        margin-bottom: -100svh !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+
+    .grand-bg-wrapper .multi-section-bg > *,
+    .grand-bg-wrapper .services-diff-bg > *,
+    .grand-bg-wrapper .partner-bg > *,
+    .grand-bg-wrapper .immersion-brands-bg > *,
+    .impact-contact-bg > * {
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    .grand-bg-wrapper .multi-section-bg::before {
+        background-image: linear-gradient(rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.82)),
+            url('Background/hand%20pick%201.jpeg') !important;
+    }
+
+    .grand-bg-wrapper .services-diff-bg::before {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(5, 5, 5, 0.82) 50%, rgba(0, 0, 0, 0.75)),
+            url('Background/image%202.jfif') !important;
+    }
+
+    .grand-bg-wrapper .partner-bg::before {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(5, 5, 5, 0.82) 50%, rgba(0, 0, 0, 0.75)),
+            url('Background/hand%20pick%202.jpeg') !important;
+    }
+
+    .grand-bg-wrapper .immersion-brands-bg::before {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(10, 10, 10, 0.82) 50%, rgba(0, 0, 0, 0.75)),
+            url('Background/image5.jfif') !important;
+    }
+
+    .impact-contact-bg::before {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(5, 5, 5, 0.88) 50%, rgba(0, 0, 0, 0.8)),
+            url('Background/image%203.jfif') !important;
+    }
+
+    /* Hero YouTube: full-bleed cover on portrait phones */
+    .hero.cinematic {
+        min-height: 100vh;
+        min-height: 100dvh;
+        min-height: 100svh;
+    }
+
+    .hero-video-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+    }
+
+    .hero-bg-video {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: 177.78vh !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        height: 100svh !important;
+        min-width: 100vw !important;
+        min-height: 100% !important;
+        max-width: none !important;
+        transform: translate(-50%, -50%) !important;
+        border: none !important;
+    }
+}
