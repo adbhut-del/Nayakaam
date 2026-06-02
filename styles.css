@@ -543,10 +543,22 @@ img {
     z-index: 0;
 }
 
+/* Visible immediately on mobile if YouTube is slow/blocked */
+.hero-video-poster {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 1;
+    background: #0d0d0d url('Background/hand%20pick%20mobile%201.jpeg') center center / cover no-repeat;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
 .hero-bg-video {
     position: absolute;
     top: 50%;
     left: 50%;
+    z-index: 1;
     width: 100vw;
     height: 56.25vw;
     min-width: 177.78vh;
@@ -557,13 +569,13 @@ img {
     transform-origin: center center;
     border: none;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
+    opacity: 1;
     filter: brightness(0.95) contrast(1.08) saturate(1.05);
 }
 
-.hero.cinematic.hero-video-ready .hero-bg-video {
-    opacity: 1;
+.hero.cinematic.hero-video-ready .hero-video-poster {
+    opacity: 0;
+    transition: opacity 0.8s ease;
 }
 
 .hero-overlay {
@@ -4777,7 +4789,13 @@ img {
         min-height: 56.25vw;
         max-width: none;
         transform: translate(-50%, -50%);
-        filter: brightness(1.1) contrast(1.06) saturate(1.12);
+        opacity: 1 !important;
+        filter: brightness(1.12) contrast(1.08) saturate(1.15);
+    }
+
+    .hero.cinematic .hero-video-poster {
+        background-image: url('Background/hand%20pick%20mobile%201.jpeg');
+        background-position: center 30%;
     }
 
     .hero-scroll-indicator {

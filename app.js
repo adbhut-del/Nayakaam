@@ -47,7 +47,11 @@
         }
 
         iframe.addEventListener('load', markReady);
-        setTimeout(markReady, 2500);
+        setTimeout(markReady, 800);
+
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            markReady();
+        }
 
         function syncHeroLayout() {
             hero.classList.toggle('hero--mobile', window.matchMedia('(max-width: 768px)').matches);
