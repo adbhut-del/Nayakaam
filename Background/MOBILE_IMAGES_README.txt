@@ -1,17 +1,15 @@
-MOBILE BACKGROUND IMAGES (optional)
-===================================
+MOBILE BACKGROUND IMAGES
+========================
 
-Desktop uses these files (required — already in folder):
-  - hand pick 1.jpeg   (top of main scroll area)
-  - hand pick 2.jpeg   (bottom of main scroll area)
-  - image 3.jfif       (Impact & Contact section only)
+Desktop:
+  - hand pick 1.jpeg   (top)
+  - hand pick 2.jpeg   (bottom)
+  - image 3.jfif       (Impact & Contact)
 
-Mobile now uses THE SAME files by default.
-
-OPTIONAL: Upload portrait crops for sharper mobile (exact filenames):
-  - hand pick 1-mobile.jpeg
-  - hand pick 2-mobile.jpeg
-  - image 3-mobile.jfif
+Mobile (required filenames in this folder):
+  - hand pick mobile 1.jpeg  → About / Vision / top sections
+  - hand pick mobile 2.jpeg  → Services / Partner / Immersion
+  - image 3.jfif             → Impact & Contact (same as desktop)
 
 Recommended size for each mobile file:
   - Width:  1080 px (min 828 px)

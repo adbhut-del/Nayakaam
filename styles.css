@@ -4648,18 +4648,10 @@ img {
         z-index: 1 !important;
     }
 
-    /*
-     * SAME images as desktop .grand-bg-wrapper:
-     *   top half  → hand pick 1.jpeg
-     *   lower half → hand pick 2.jpeg
-     * Contact (outside wrapper) → image 3.jfif
-     *
-     * Optional mobile crops (upload to Background/ — used if you add these files):
-     *   hand pick 1-mobile.jpeg, hand pick 2-mobile.jpeg, image 3-mobile.jfif
-     */
+    /* Mobile-only backgrounds (desktop uses hand pick 1 / hand pick 2) */
     .grand-bg-wrapper .multi-section-bg::before {
         background-image: linear-gradient(rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.82)),
-            url('Background/hand%20pick%201.jpeg') !important;
+            url('Background/hand%20pick%20mobile%201.jpeg') !important;
         background-position: center top !important;
     }
 
@@ -4667,7 +4659,7 @@ img {
     .grand-bg-wrapper .partner-bg::before,
     .grand-bg-wrapper .immersion-brands-bg::before {
         background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), rgba(5, 5, 5, 0.82) 50%, rgba(0, 0, 0, 0.75)),
-            url('Background/hand%20pick%202.jpeg') !important;
+            url('Background/hand%20pick%20mobile%202.jpeg') !important;
         background-position: center bottom !important;
     }
 
