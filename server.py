@@ -2,13 +2,11 @@
 NAYAKAAM PRODUCTIONS — Flask Backend Server
 Handles: API routes for highlights CRUD, image uploads, 
 serves static frontend files.
-Deploy-ready with SQLite database.
+Deploy-ready: Neon Postgres on Vercel, SQLite locally, optional Vercel Blob for images.
 """
 
 import os
 import uuid
-import sqlite3
-import json
 import re
 import smtplib
 from email.mime.text import MIMEText
@@ -17,16 +15,25 @@ from datetime import datetime
 from urllib.parse import unquote
 from flask import Flask, request, jsonify, send_from_directory
 
+from db import (
+    db_backend_name,
+    fetchall,
+    fetchone,
+    get_db,
+    init_db,
+    execute,
+    IS_VERCEL,
+    use_postgres,
+)
+from storage import blob_enabled, upload_to_blob
+
 # ===== CONFIG =====
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-IS_VERCEL = os.environ.get('VERCEL') == '1' or bool(os.environ.get('VERCEL_ENV'))
 
 if IS_VERCEL:
     UPLOAD_FOLDER = '/tmp/uploads'
-    DATABASE = '/tmp/nayakaam_productions.db'
 else:
     UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
-    DATABASE = os.path.join(BASE_DIR, 'nayakaam_productions.db')
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10MB
@@ -45,46 +52,41 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH
 
 
-# ===== DATABASE =====
-def get_db():
-    """Get a database connection."""
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
-
-
-def init_db():
-    """Initialize the database with the highlights table."""
-    conn = get_db()
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS highlights (
-            id TEXT PRIMARY KEY,
-            title TEXT NOT NULL,
-            description TEXT NOT NULL,
-            video_url TEXT DEFAULT '',
-            image_filename TEXT NOT NULL,
-            created_at TEXT NOT NULL
-        )
-    ''')
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS messages (
-            id TEXT PRIMARY KEY,
-            name TEXT NOT NULL,
-            email TEXT NOT NULL,
-            mobile TEXT DEFAULT '',
-            message TEXT NOT NULL,
-            created_at TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
-    print("[DB] Database initialized successfully.")
-
-
 def allowed_file(filename):
     """Check if the file extension is allowed."""
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def image_public_url(stored_value):
+    """Turn DB value into URL for the frontend."""
+    if not stored_value:
+        return ''
+    if stored_value.startswith('http://') or stored_value.startswith('https://'):
+        return stored_value
+    return f'/uploads/{stored_value}'
+
+
+def save_uploaded_image(file):
+    """
+    Save uploaded image to Vercel Blob (production) or local uploads folder.
+    Returns stored value for DB: public URL or local filename.
+    """
+    ext = file.filename.rsplit('.', 1)[1].lower()
+    unique_name = f"{uuid.uuid4().hex}.{ext}"
+    content_type = file.content_type or f"image/{ext}"
+
+    if blob_enabled():
+        file_bytes = file.read()
+        file.seek(0)
+        blob_path = f"highlights/{unique_name}"
+        public_url = upload_to_blob(file_bytes, blob_path, content_type)
+        if public_url:
+            return public_url
+
+    filepath = os.path.join(UPLOAD_FOLDER, unique_name)
+    file.save(filepath)
+    return unique_name
 
 
 def get_youtube_id(url):
@@ -106,21 +108,31 @@ def get_youtube_id(url):
 
 # ===== API ROUTES =====
 
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Quick check that Neon/Blob env is wired on Vercel."""
+    return jsonify({
+        'success': True,
+        'vercel': IS_VERCEL,
+        'database': db_backend_name(),
+        'postgres_configured': use_postgres(),
+        'blob_configured': blob_enabled(),
+    })
+
+
 @app.route('/api/highlights', methods=['GET'])
 def get_highlights():
     """Get all highlights, newest first."""
     try:
         conn = get_db()
-        rows = conn.execute(
-            'SELECT * FROM highlights ORDER BY created_at DESC'
-        ).fetchall()
+        rows = fetchall(
+            conn, 'SELECT * FROM highlights ORDER BY created_at DESC'
+        )
         conn.close()
 
         highlights = []
         for row in rows:
-            img_filename = row['image_filename']
-            # If it's a full URL (YouTube thumb), use as is; otherwise prefix /uploads/
-            image_url = img_filename if img_filename.startswith('http') else f'/uploads/{img_filename}'
+            image_url = image_public_url(row['image_filename'])
             
             highlights.append({
                 'id': row['id'],
@@ -157,11 +169,7 @@ def add_highlight():
             if not allowed_file(file.filename):
                 return jsonify({'success': False, 'error': 'Invalid image format. Use JPG, PNG, or WebP'}), 400
             
-            # Generate unique filename
-            ext = file.filename.rsplit('.', 1)[1].lower()
-            unique_filename = f"{uuid.uuid4().hex}.{ext}"
-            filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
-            file.save(filepath)
+            unique_filename = save_uploaded_image(file)
         elif video_url:
             # Fallback to YouTube thumbnail or Instagram placeholder
             yt_id = get_youtube_id(video_url)
@@ -180,9 +188,10 @@ def add_highlight():
         created_at = datetime.utcnow().isoformat() + 'Z'
 
         conn = get_db()
-        conn.execute(
+        execute(
+            conn,
             'INSERT INTO highlights (id, title, description, video_url, image_filename, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-            (highlight_id, title, description, video_url, unique_filename, created_at)
+            (highlight_id, title, description, video_url, unique_filename, created_at),
         )
         conn.commit()
         conn.close()
@@ -194,7 +203,7 @@ def add_highlight():
                 'title': title,
                 'description': description,
                 'videoUrl': video_url,
-                'imageUrl': unique_filename if unique_filename.startswith('http') else f'/uploads/{unique_filename}',
+                'imageUrl': image_public_url(unique_filename),
                 'createdAt': created_at
             }
         }), 201
@@ -208,22 +217,23 @@ def delete_highlight(highlight_id):
     """Delete a highlight and its image file."""
     try:
         conn = get_db()
-        # Get the image filename before deleting
-        row = conn.execute(
-            'SELECT image_filename FROM highlights WHERE id = ?', (highlight_id,)
-        ).fetchone()
+        row = fetchone(
+            conn,
+            'SELECT image_filename FROM highlights WHERE id = ?',
+            (highlight_id,),
+        )
 
         if not row:
             conn.close()
             return jsonify({'success': False, 'error': 'Highlight not found'}), 404
 
-        # Delete the image file
-        image_path = os.path.join(UPLOAD_FOLDER, row['image_filename'])
-        if os.path.exists(image_path):
-            os.remove(image_path)
+        image_name = row['image_filename']
+        if image_name and not image_name.startswith('http'):
+            image_path = os.path.join(UPLOAD_FOLDER, image_name)
+            if os.path.exists(image_path):
+                os.remove(image_path)
 
-        # Delete from database
-        conn.execute('DELETE FROM highlights WHERE id = ?', (highlight_id,))
+        execute(conn, 'DELETE FROM highlights WHERE id = ?', (highlight_id,))
         conn.commit()
         conn.close()
 
@@ -287,9 +297,10 @@ def submit_contact():
         created_at = datetime.utcnow().isoformat() + 'Z'
 
         conn = get_db()
-        conn.execute(
+        execute(
+            conn,
             'INSERT INTO messages (id, name, email, mobile, message, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-            (msg_id, name, email, mobile, message, created_at)
+            (msg_id, name, email, mobile, message, created_at),
         )
         conn.commit()
         conn.close()
@@ -345,8 +356,18 @@ def serve_static(filepath):
     return jsonify({'success': False, 'error': 'Not found'}), 404
 
 
-# Initialize DB for local + Vercel serverless
+# Initialize DB for local + Vercel (Postgres when POSTGRES_URL is set)
 init_db()
+if IS_VERCEL and not use_postgres():
+    print(
+        "[DB] Warning: On Vercel without POSTGRES_URL/DATABASE_URL — admin data will not persist. "
+        "Connect Neon to this project in Storage → Connect to Project, then redeploy."
+    )
+if IS_VERCEL and not blob_enabled():
+    print(
+        "[Blob] Tip: Add Vercel Blob storage for persistent uploaded images, "
+        "or use YouTube URLs in admin."
+    )
 
 # ===== RUN =====
 if __name__ == '__main__':
