@@ -1637,11 +1637,14 @@
 
             createMedias() {
                 const items = [
-                    { image: assetUrl('scroller/Google For India (5).jpeg'), text: 'Google For India' },
-                    { image: assetUrl('scroller/Google For India (8).jpeg'), text: 'Event Scale' },
-                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg'), text: 'Live Broadcast' },
-                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg'), text: 'Production Control' },
-                    { image: assetUrl('scroller/download.jfif'), text: 'Visual Tech' }
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 4.26.19 PM.jpeg'), text: 'Live Production' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 4.26.20 PM.jpeg'), text: 'Event Coverage' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 4.34.54 PM.jpeg'), text: 'On-Ground Action' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 4.35.27 PM.jpeg'), text: 'Brand Experience' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.31 PM.jpeg'), text: 'Studio Setup' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.34 PM.jpeg'), text: 'Broadcast Control' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.43.50 PM (1).jpeg'), text: 'Creative Direction' },
+                    { image: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.43.50 PM (2).jpeg'), text: 'Immersive Scale' }
                 ];
                 const geometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
                 this.medias = [...items, ...items].map((item, index) => new Media({
@@ -1696,13 +1699,13 @@
 
         const items = [
             { url: assetUrl('logos/google.svg'), type: 'logo' },
-            { url: assetUrl('scroller/Google For India (5).jpeg'), type: 'project' },
+            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 4.34.54 PM.jpeg'), type: 'project' },
             { url: assetUrl('logos/amazon.svg'), type: 'logo' },
-            { url: assetUrl('scroller/Google For India (8).jpeg'), type: 'project' },
+            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.31 PM.jpeg'), type: 'project' },
             { url: assetUrl('logos/meta.svg'), type: 'logo' },
-            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 5.16.33 PM.jpeg'), type: 'project' },
+            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.43.50 PM (1).jpeg'), type: 'project' },
             { url: assetUrl('logos/vw.svg'), type: 'logo' },
-            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.17.01 PM (1).jpeg'), type: 'project' }
+            { url: assetUrl('scroller/WhatsApp Image 2026-04-21 at 6.43.50 PM (2).jpeg'), type: 'project' }
         ];
 
         let imagesTotal = items.length;
