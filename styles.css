@@ -3347,6 +3347,7 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow: hidden;
     color: white;
     box-shadow: 0 30px 60px rgba(0,0,0,0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -3363,24 +3364,25 @@ img {
 .stack-card-content {
     width: 100%;
     max-width: 100%;
+    min-width: 0;
     text-align: left;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .stack-card-title,
 .stack-card-content h3 {
     font-family: var(--font-display);
-    font-size: 1.42rem;
+    font-size: 1.28rem;
     font-weight: 700;
     line-height: 1.2;
     margin: 0 0 12px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     max-width: 100%;
-}
-
-.stack-card-content h3.animate-chars .char {
-    display: inline;
+    white-space: nowrap;
+    display: block;
+    overflow: hidden;
 }
 
 /* Section heading beside the card stack */
@@ -3490,11 +3492,6 @@ img {
     .interactive-stack {
         width: 272px;
         height: 368px;
-    }
-
-    .stack-card-title,
-    .stack-card-content h3 {
-        font-size: 1.28rem;
     }
 
     .stack-card-content p {
@@ -3772,10 +3769,6 @@ img {
         padding: 24px 26px;
     }
 
-    .stack-card-title,
-    .stack-card-content h3 {
-        font-size: 1.22rem;
-    }
 
     .diff-text-content .section-title.animate-chars,
     .diff-text-content h2.animate-chars {

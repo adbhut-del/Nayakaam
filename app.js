@@ -673,6 +673,8 @@
 
         initScrollReveal();
         initTextAnimations();
+        scheduleFitStackCardTitles();
+        window.addEventListener('resize', scheduleFitStackCardTitles);
         initLazyMotion();
         initStatsAnimation();
         initAboutBackgroundScroll();
@@ -1383,9 +1385,30 @@
         });
     }
 
+    // ===== STACK CARD TITLES — one line, full text, inside card =====
+    function fitStackCardTitles() {
+        document.querySelectorAll('.stack-card-title').forEach(function (title) {
+            var box = title.closest('.stack-card-content');
+            if (!box || !box.clientWidth) return;
+            var size = 21;
+            var min = 12;
+            title.style.fontSize = size + 'px';
+            while (title.scrollWidth > box.clientWidth && size > min) {
+                size -= 0.5;
+                title.style.fontSize = size + 'px';
+            }
+        });
+    }
+
+    var fitStackCardTitlesTimer;
+    function scheduleFitStackCardTitles() {
+        clearTimeout(fitStackCardTitlesTimer);
+        fitStackCardTitlesTimer = setTimeout(fitStackCardTitles, 50);
+    }
+
     // ===== CHARACTER ANIMATIONS (SPLIT TEXT) =====
     function initTextAnimations() {
-        const textElements = document.querySelectorAll('.animate-chars');
+        const textElements = document.querySelectorAll('.animate-chars:not(.stack-card-title)');
         
         textElements.forEach(el => {
             const text = el.textContent.trim();
