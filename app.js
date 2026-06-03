@@ -36,32 +36,6 @@
     const heroParticles = document.getElementById('hero-particles');
 
     // ===== PRELOADER =====
-    // ===== HERO BACKGROUND VIDEO (YouTube embed — mobile cover + autoplay) =====
-    function initHeroVideo() {
-        var hero = document.getElementById('hero');
-        var iframe = document.getElementById('hero-bg-video');
-        if (!hero || !iframe) return;
-
-        function markReady() {
-            hero.classList.add('hero-video-ready');
-        }
-
-        iframe.addEventListener('load', markReady);
-        setTimeout(markReady, 800);
-
-        if (window.matchMedia('(max-width: 768px)').matches) {
-            markReady();
-        }
-
-        function syncHeroLayout() {
-            hero.classList.toggle('hero--mobile', window.matchMedia('(max-width: 768px)').matches);
-        }
-
-        syncHeroLayout();
-        window.addEventListener('resize', syncHeroLayout, { passive: true });
-        window.addEventListener('orientationchange', syncHeroLayout, { passive: true });
-    }
-
     function initPreloader() {
         const preloader = document.getElementById('preloader');
         if (!preloader) return;
@@ -675,7 +649,6 @@
     // ===== INITIALIZE =====
     function init() {
         initPreloader();
-        initHeroVideo();
         document.documentElement.classList.add('js-enabled');
         initHeaderScroll();
         initMobileMenu();

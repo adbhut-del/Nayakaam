@@ -409,8 +409,6 @@ img {
 .hero {
     position: relative;
     min-height: 100vh;
-    min-height: 100dvh;
-    min-height: 100svh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -420,8 +418,6 @@ img {
 .hero-bg-gradient {
     position: absolute;
     inset: 0;
-    z-index: 2;
-    pointer-events: none;
     background:
         radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 0, 0, 0.12) 0%, transparent 60%),
         radial-gradient(ellipse 60% 50% at 20% 80%, rgba(26, 26, 26, 0.04) 0%, transparent 50%),
@@ -437,9 +433,7 @@ img {
 .hero-particles {
     position: absolute;
     inset: 0;
-    z-index: 2;
     overflow: hidden;
-    pointer-events: none;
 }
 
 .hero-content {
@@ -522,8 +516,7 @@ img {
 
 /* ===== CINEMATIC HERO ENHANCEMENTS ===== */
 .hero.cinematic {
-    background: #0d0d0d;
-    isolation: isolate;
+    background: transparent;
 }
 
 .hero-video-container {
@@ -531,65 +524,41 @@ img {
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: -1;
     overflow: hidden;
-}
-
-/* Clipping box for YouTube cover scaling (iframe ignores object-fit) */
-.hero-video-frame {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-}
-
-/* Visible immediately on mobile if YouTube is slow/blocked */
-.hero-video-poster {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    opacity: 1;
-    background: #0d0d0d url('Background/hand%20pick%20mobile%201.jpeg') center center / cover no-repeat;
-    pointer-events: none;
-    transition: opacity 0.8s ease;
 }
 
 .hero-bg-video {
     position: absolute;
     top: 50%;
     left: 50%;
-    z-index: 1;
     width: 100vw;
-    height: 56.25vw;
-    min-width: 177.78vh;
-    min-height: 100vh;
-    min-height: 100dvh;
-    min-height: 100svh;
+    height: 100vh;
     transform: translate(-50%, -50%);
-    transform-origin: center center;
+    object-fit: cover;
     border: none;
     pointer-events: none;
     opacity: 1;
-    filter: brightness(0.95) contrast(1.08) saturate(1.05);
+    filter: brightness(0.9) contrast(1.1);
 }
 
-.hero.cinematic.hero-video-ready .hero-video-poster {
-    opacity: 0;
-    transition: opacity 0.8s ease;
+@media (min-aspect-ratio: 16/9) {
+    .hero-bg-video {
+        height: 56.25vw;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .hero-bg-video {
+        width: 177.78vh;
+    }
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
+    background: linear-gradient(to bottom, rgba(13, 13, 13, 0.2), var(--bg-primary));
     z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-        180deg,
-        rgba(13, 13, 13, 0.18) 0%,
-        rgba(13, 13, 13, 0.28) 45%,
-        rgba(13, 13, 13, 0.62) 85%,
-        rgba(13, 13, 13, 0.78) 100%
-    );
 }
 
 /* ===== INTERACTIVE NODE SECTION ===== */
@@ -1345,10 +1314,9 @@ img {
 /* Scroll Indicator */
 .hero-scroll-indicator {
     position: absolute;
-    bottom: max(24px, env(safe-area-inset-bottom, 0px));
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1358,7 +1326,12 @@ img {
     letter-spacing: 2px;
     text-transform: uppercase;
     animation: fade-up 0.8s var(--ease-out) 1s both;
-    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .hero-scroll-indicator {
+        display: none; /* Save space on small mobile heights */
+    }
 }
 
 .scroll-line {
@@ -3389,11 +3362,36 @@ img {
 
 .stack-card-content h3 {
     font-family: var(--font-display);
-    font-size: 1.8rem;
+    font-size: 1.25rem !important;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.25;
     margin-bottom: 16px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    letter-spacing: -0.02em;
+}
+
+/* animate-chars: keep text on one clean line inside stack cards */
+.stack-card-content h3.animate-chars {
+    white-space: nowrap;
+}
+
+.stack-card-content h3.animate-chars .char {
+    display: inline;
+    white-space: nowrap;
+}
+
+/* Section heading beside the card stack */
+.diff-text-content .section-title.animate-chars,
+.diff-text-content h2.animate-chars {
+    display: block;
+    white-space: nowrap;
+    line-height: 1.15;
+}
+
+.diff-text-content .section-title.animate-chars .char,
+.diff-text-content h2.animate-chars .char {
+    display: inline;
+    white-space: nowrap;
 }
 
 .stack-card-content p {
@@ -3759,7 +3757,12 @@ img {
     }
 
     .stack-card-content h3 {
-        font-size: 1.4rem;
+        font-size: 1.05rem !important;
+    }
+
+    .diff-text-content .section-title.animate-chars,
+    .diff-text-content h2.animate-chars {
+        font-size: clamp(1.5rem, 5.5vw, 1.85rem) !important;
     }
 
     /* Visibility and Spacing */
@@ -4760,58 +4763,31 @@ img {
         background-position: center center !important;
     }
 
-    /* ===== Hero video: mobile cinematic cover ===== */
+    /* Hero YouTube: full-bleed cover on portrait phones */
     .hero.cinematic {
+        min-height: 100vh;
+        min-height: 100dvh;
         min-height: 100svh;
     }
 
-    .hero.cinematic .hero-overlay {
-        background: linear-gradient(
-            180deg,
-            rgba(13, 13, 13, 0.08) 0%,
-            rgba(13, 13, 13, 0.15) 40%,
-            rgba(13, 13, 13, 0.42) 82%,
-            rgba(13, 13, 13, 0.58) 100%
-        );
+    .hero-video-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
     }
 
-    .hero.cinematic .hero-bg-gradient {
-        opacity: 0.4;
-    }
-
-    /* Portrait: 16:9 cover fill + focal point slightly above center (keeps subject in frame) */
-    .hero.cinematic .hero-bg-video {
-        top: 42%;
-        left: 50%;
-        width: 177.78vh;
-        height: 100svh;
-        min-width: 100vw;
-        min-height: 56.25vw;
-        max-width: none;
-        transform: translate(-50%, -50%);
-        opacity: 1 !important;
-        filter: brightness(1.12) contrast(1.08) saturate(1.15);
-    }
-
-    .hero.cinematic .hero-video-poster {
-        background-image: url('Background/hand%20pick%20mobile%201.jpeg');
-        background-position: center 30%;
-    }
-
-    .hero-scroll-indicator {
-        display: flex;
-        bottom: max(16px, env(safe-area-inset-bottom, 0px));
-        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
-    }
-}
-
-/* Landscape phones: less aggressive crop */
-@media (max-width: 768px) and (orientation: landscape) {
-    .hero.cinematic .hero-bg-video {
-        top: 50%;
-        width: 100vw;
-        height: 56.25vw;
-        min-width: 177.78vh;
-        min-height: 100svh;
+    .hero-bg-video {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: 177.78vh !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        height: 100svh !important;
+        min-width: 100vw !important;
+        min-height: 100% !important;
+        max-width: none !important;
+        transform: translate(-50%, -50%) !important;
+        border: none !important;
     }
 }

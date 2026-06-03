@@ -10,14 +10,6 @@
       "use": "@vercel/static"
     }
   ],
-  "headers": [
-    {
-      "source": "/(.*\\.(html|css|js))",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    }
-  ],
   "routes": [
     {
       "src": "/api/(.*)",
