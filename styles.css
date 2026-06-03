@@ -2566,6 +2566,15 @@ img {
     .contact-inner {
         flex-direction: column;
     }
+
+    .contact-left {
+        order: 1;
+    }
+
+    .contact-right {
+        order: 2;
+        width: 100%;
+    }
 }
 
 .contact-text {
@@ -3528,9 +3537,30 @@ img {
 }
 
 .impact-section,
-.contact-section {
+.contact-section-wrap .contact-section {
     background: transparent !important;
     border: none !important;
+}
+
+/* Contact block sits after mobile pillar section; form is last before footer */
+.contact-section-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 1025px) {
+    .contact-section-wrap {
+        background-image: linear-gradient(to bottom, #000, rgba(5, 5, 5, 0.85) 15%, rgba(5, 5, 5, 0.85) 85%, #000),
+            url('Background/image%203.jfif');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding-bottom: 60px;
+    }
+
+    .contact-section-wrap .contact-section {
+        border-top: none !important;
+    }
 }/* ===== CIRCULAR SHOWCASE GALLERY ===== */
 .circular-showcase-section {
     padding: 100px 32px;

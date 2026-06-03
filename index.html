@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=2.4">
+    <link rel="stylesheet" href="styles.css?v=2.5">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -547,13 +547,13 @@
                         <div class="ticker-item"><img src="logos/amazon.svg" alt="Amazon"></div>
                         <div class="ticker-item"><img src="logos/meta.svg" alt="Meta"></div>
                         <div class="ticker-item"><img src="logos/vw.svg" alt="VW"></div>
-                        <div class="ticker-item"><img src="logo.png" alt="Nayakaam" class="ticker-logo-alt"></div>
+                        <!-- <div class="ticker-item"><img src="logo.png" alt="Nayakaam" class="ticker-logo-alt"></div> -->
                         <!-- Set 2 (Duplicate for seamless loop) -->
                         <div class="ticker-item"><img src="logos/google.svg" alt="Google"></div>
                         <div class="ticker-item"><img src="logos/amazon.svg" alt="Amazon"></div>
                         <div class="ticker-item"><img src="logos/meta.svg" alt="Meta"></div>
                         <div class="ticker-item"><img src="logos/vw.svg" alt="VW"></div>
-                        <div class="ticker-item"><img src="logo.png" alt="Nayakaam" class="ticker-logo-alt"></div>
+                        <!-- <div class="ticker-item"><img src="logo.png" alt="Nayakaam" class="ticker-logo-alt"></div> -->
                     </div>
                 </div>
             </section>
@@ -670,70 +670,6 @@
                 </div>
             </div>
         </section>
-
-
-
-        <!-- ===== CONTACT SECTION ===== -->
-        <section id="contact-section" class="contact-section">
-            <div class="contact-inner">
-                <div class="contact-left">
-                    <span class="section-tag">Get In Touch</span>
-                    <h2 class="section-title">Let's Create<br>Something Amazing</h2>
-                    <p class="contact-text">Ready to transform your brand experience? We'd love to hear from you.</p>
-                    <div class="contact-info">
-                        <div class="contact-info-item reveal">
-                            <span class="contact-label">Email</span>
-                            <a href="mailto:nayakaamproductions@gmail.com">nayakaamproductions@gmail.com</a>
-                        </div>
-                        <div class="contact-info-item reveal">
-                            <span class="contact-label">Phone</span>
-                            <a href="tel:+919258925877">+91 92589 25877</a>
-                        </div>
-                        <div class="contact-info-item reveal">
-                            <span class="contact-label">Location</span>
-                            <span>Gurgaon, Haryana, India</span>
-                        </div>
-                        <div class="contact-info-item reveal">
-                            <span class="contact-label">Direct Booking</span>
-                            <a href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">📅 Book a Session via
-                                Calendar</a>
-                        </div>
-                    </div>
-                    <div class="contact-socials">
-                        <a href="https://www.instagram.com/nayakaamproductions/" target="_blank" class="social-link"
-                            id="social-instagram">Instagram</a>
-                        <a href="https://www.linkedin.com/company/nayakaamproductions/" target="_blank"
-                            class="social-link" id="social-linkedin">LinkedIn</a>
-                    </div>
-                </div>
-                <div class="contact-right">
-                    <form id="contact-form" class="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="contact-name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="contact-email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="tel" id="contact-mobile" placeholder="Your Mobile Number" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="contact-message" placeholder="Tell us about your project..." rows="5"
-                                required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary contact-submit" id="contact-submit-btn">
-                            <span class="btn-text">Send Message</span>
-                            <svg class="btn-loading" viewBox="0 0 24 24"
-                                style="display: none; width: 20px; height: 20px; animation: spin 1s linear infinite;">
-                                <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
-                            </svg>
-                        </button>
-                        <div id="contact-form-message" class="contact-form-msg"></div>
-                    </form>
-                </div>
-            </div>
-        </section>
     </div>
 
     <!-- ===== WHY PARTNER WITH US — PILLAR CARDS ===== -->
@@ -819,7 +755,69 @@
         </div>
     </section>
 
-
+    <!-- ===== CONTACT SECTION (after pillar on mobile) ===== -->
+    <div class="contact-section-wrap">
+        <section id="contact-section" class="contact-section">
+            <div class="contact-inner">
+                <div class="contact-left">
+                    <span class="section-tag">Get In Touch</span>
+                    <h2 class="section-title">Let's Create<br>Something Amazing</h2>
+                    <p class="contact-text">Ready to transform your brand experience? We'd love to hear from you.</p>
+                    <div class="contact-info">
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:nayakaamproductions@gmail.com">nayakaamproductions@gmail.com</a>
+                        </div>
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Phone</span>
+                            <a href="tel:+919258925877">+91 92589 25877</a>
+                        </div>
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Location</span>
+                            <span>Gurgaon, Haryana, India</span>
+                        </div>
+                        <div class="contact-info-item reveal">
+                            <span class="contact-label">Direct Booking</span>
+                            <a href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">📅 Book a Session via
+                                Calendar</a>
+                        </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://www.instagram.com/nayakaamproductions/" target="_blank" class="social-link"
+                            id="social-instagram">Instagram</a>
+                        <a href="https://www.linkedin.com/company/nayakaamproductions/" target="_blank"
+                            class="social-link" id="social-linkedin">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="contact-right">
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="contact-name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="contact-email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="contact-mobile" placeholder="Your Mobile Number" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="contact-message" placeholder="Tell us about your project..." rows="5"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary contact-submit" id="contact-submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <svg class="btn-loading" viewBox="0 0 24 24"
+                                style="display: none; width: 20px; height: 20px; animation: spin 1s linear infinite;">
+                                <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+                            </svg>
+                        </button>
+                        <div id="contact-form-message" class="contact-form-msg"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- ===== FOOTER ===== -->
 
